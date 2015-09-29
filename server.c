@@ -130,12 +130,13 @@ int main(){
 								send(remoteSocket,generateMessage("",FINISHED),MAXDATASIZE,0);
 							break;
 						}
-						case CHAT:{
+						case MESSAGECHAT:{
 							
 						}
 
 					}
 				}else{
+					putMessageChatInLog(userName,"Estou indo embora");
 					removeUser(userName);
 					close(remoteSocket);
 					break;

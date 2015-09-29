@@ -29,9 +29,6 @@ int checkUserName(char *userName){
 		}
 	}
 	
-	printf("Nome verificado %s\n", userName);
-	fflush(stdout);
-	
 	fclose(users);
 	return 0;
 }
@@ -111,9 +108,10 @@ void removeUser(char *userName){
 	}
 	
 	printf("Usuário desconectado : %s\n", userName);
+	fflush(stdout);
 }
 
-//Essa função insere uma mensagem nos logs de usuários
+//Essa função retorna uma lista de usuários ativos
 struct userList checkActiveUsers(){
 	FILE *users;
 	char *line;
@@ -140,6 +138,45 @@ struct userList checkActiveUsers(){
 	
 	fclose(users);
 	return _users;
+}
+
+void putMessageChatInLog(char *userName, char *messageChat){
+	int i;
+	char *fileName;
+	FILE *logUser;
+	
+	fileName = (char *) calloc(50,sizeof(char));
+	
+	struct userList _users = checkActiveUsers();
+	
+	for(i=0;i<_users.size;i++){
+			
+	printf("Escrevendo mensagem no log\n");
+	fflush(stdout);
+		
+		if(strcmp(_users.name[i],userName) != 0){
+			
+			strcpy(fileName,"files/");
+			strcat(fileName,_users.name[i]);
+			strcat(fileName,".txt");
+				
+			printf("Nome do arquivo: %s\n", fileName);
+			fflush(stdout);
+			
+			logUser = fopen(fileName, "a+");
+			if(!logUser)	
+				printf("Erro ao criar arquivo\n");
+				fflush(stdout);
+			
+			fputs(messageChat, logUser);
+			fclose(logUser);
+		}
+		
+	}	
+}
+
+void checkLog(char *userName){
+
 }
 
 
