@@ -24,6 +24,7 @@ int main(){
 	char *msg;
 	char *bufferRcv;
 	char *_bufferRcv;
+	int isChatting;
 	int fluxo;
 	int opc,opc2;
 	int numBytes;
@@ -121,6 +122,17 @@ int main(){
 								
 							break;
 							}case 2:{
+								
+								isChatting = 1;
+								while(isChatting){
+									numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
+									bufferRcv[numBytes] = '\0';
+									strcpy(_bufferRcv, bufferRcv);
+										
+									if(checkKindMessage(_bufferRcv) == MESSAGECHAT){
+										printf("Mensagem : %s", checkMessage(bufferRcv));
+									}
+								}
 								
 							break;	
 							}case 3:{

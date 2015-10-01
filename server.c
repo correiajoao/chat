@@ -131,7 +131,11 @@ int main(){
 							break;
 						}
 						case MESSAGECHAT:{
-							
+							putMessageChatInLog(userName, msgContent);
+							break;
+						}case CLOSE:{
+							removeUser(userName);
+							break;
 						}
 
 					}
@@ -141,6 +145,8 @@ int main(){
 					close(remoteSocket);
 					break;
 				}
+				
+				
 			}
 			
 		break;

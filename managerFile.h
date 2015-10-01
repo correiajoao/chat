@@ -62,6 +62,8 @@ void insertUser(char *userName, char *address){
 
 //Remove um usuário da lista de usuários
 void removeUser(char *userName){
+	printf("Função removeUser\n");
+	fflush(stdout);
 	int control = 0;
 	
 	FILE *users;
@@ -70,10 +72,12 @@ void removeUser(char *userName){
 	char *line;
 	char *_line;
 	char *token;
+	char *_token;
 
 	line =(char *) calloc (150,sizeof(char));
 	_line =(char *) calloc (150,sizeof(char));
 	token =(char *) calloc (50,sizeof(char));
+	_token =(char *) calloc (50,sizeof(char));
 
 	users = fopen("files/users.txt","r+");
 		if(!users)
@@ -87,12 +91,20 @@ void removeUser(char *userName){
 		fscanf(users,"%s", line);
 		strcpy(_line, line);
 		token = strtok(_line,"@");	
-			
-		if(strcmp(token,userName) != 0){
-			strcat(line,"\n");
-			fputs(line,_users);
-			control = 1;
+		
+		printf("Nome testado %s\n", token);
+		fflush(stdout);
+		
+		//Isso corrige um bug implementado por satanás, não sei porque ele lê o ultimo nome do arquivo duas vezes
+		if(strcmp(_token,token) != 0){
+			if(strcmp(token,userName) != 0){
+				strcat(line,"\n");
+				fputs(line,_users);
+				control = 1;
+			}
 		}
+		
+		strcpy(_token, token);
 	}
 	
 	fclose(users);
@@ -175,8 +187,40 @@ void putMessageChatInLog(char *userName, char *messageChat){
 	}	
 }
 
-void checkLog(char *userName){
-
+struct messageList checkLog(char *userName){
+	FILE *logUser;
+	char *fileName;
+	char *line;
+	struct messageList messages;
+	
+	int i = 0;
+	messages.size = 0;
+	
+	fileName = (char *) calloc(50,sizeof(char));
+	line = (char *) calloc (150,sizeof(char));
+	
+	strcpy(fileName,"files/");
+	strcat(fileName,userName);
+	strcat(fileName,".txt");
+	
+	logUser = fopen(fileName, "r");
+	
+	if(!logUser){
+		return messages;
+	}
+	
+	while(feof(logUser) == 0){
+		i++;
+		fscanf(logUser,"%s", line);
+	
+		strcpy(messages.content[i], line);
+		messages.size = i;
+	}
+	
+	fclose(logUser);
+	remove(fileName);
+	
+	return messages;
 }
 
 

@@ -5,7 +5,8 @@ enum tag{
 	ACTIVEUSERS,
 	CONNECTED,
 	MESSAGECHAT,
-	FINISHED
+	FINISHED,
+	CLOSE
 };
 
 //Essa função recebe um conteúdo e um tipo de mensagem, assim gera uma string pronta para ser enviada através do método send().
@@ -53,7 +54,13 @@ char* generateMessage(char *value, int type){
 			strcat(result, tag);
 			strcat(result, content);						
 			break;		
-		}   
+		}case CLOSE:{
+			strcpy(tag, "close=");
+			strcpy(content, value);
+			strcat(result, tag);
+			strcat(result, content);						
+			break;		
+		}     
 		
 		default:{
 			break;
@@ -82,6 +89,8 @@ int checkKindMessage(char * bufferRcv){
 		return MESSAGECHAT;	
 	}if(strcmp(tag, "finished") == 0){
 		return FINISHED;	
+	}if(strcmp(tag, "close") == 0){
+		return CLOSE;	
 	}
 	
 	return 0;			
