@@ -58,6 +58,14 @@ void printUserList(struct userList _users){
 	printf("------------------------------- FIM DA LISTA -----------------------------------\n");
 }
 
+void printMessageList(struct messageList _messages){
+	int i = 0;
+	header("MENSAGENS DE BATE PAPO");
+	for(i=0;i<_messages.size;i++){
+		printf("-->> %s\n",_messages.content[i]);
+	}
+}
+
 void printHowWorks(){
 	header("ENTENDA COMO FUNCIONA");
 	printf("Funciona bem ... \n");

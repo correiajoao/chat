@@ -5,6 +5,7 @@ enum tag{
 	ACTIVEUSERS,
 	CONNECTED,
 	MESSAGECHAT,
+	UPDATECHAT,
 	FINISHED,
 	CLOSE
 };
@@ -48,6 +49,12 @@ char* generateMessage(char *value, int type){
 			strcat(result, tag);
 			strcat(result, content);						
 			break;		
+		}case UPDATECHAT:{
+			strcpy(tag, "updateChat=");
+			strcpy(content, value);
+			strcat(result, tag);
+			strcat(result, content);						
+			break;		
 		}case FINISHED:{
 			strcpy(tag, "finished=");
 			strcpy(content, value);
@@ -87,6 +94,8 @@ int checkKindMessage(char * bufferRcv){
 		return CONNECTED;	
 	}if(strcmp(tag, "messageChat") == 0){
 		return MESSAGECHAT;	
+	}if(strcmp(tag, "updateChat") == 0){
+		return UPDATECHAT;	
 	}if(strcmp(tag, "finished") == 0){
 		return FINISHED;	
 	}if(strcmp(tag, "close") == 0){

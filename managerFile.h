@@ -3,7 +3,7 @@ void deleteFiles(){
 	remove("files/users.txt");		
 }
 
-//Essa função verifica se o usename é válido
+//Essa função verifica se o useName é válido
 int checkUserName(char *userName){
 							
 	FILE *users;
@@ -33,7 +33,7 @@ int checkUserName(char *userName){
 	return 0;
 }
 
-//Insere um usuário da lista de usuários
+//Insere um usuário da lista de usuários onlines
 void insertUser(char *userName, char *address){
 	FILE *users;
 	char *putInFile;
@@ -60,7 +60,7 @@ void insertUser(char *userName, char *address){
 }
 
 
-//Remove um usuário da lista de usuários
+//Remove um usuário da lista de usuários onlines
 void removeUser(char *userName){
 	printf("Função removeUser\n");
 	fflush(stdout);
@@ -152,21 +152,22 @@ struct userList checkActiveUsers(){
 	return _users;
 }
 
+//Essa funçao recebe um userName e escreve a mensagem desse usuario no log de todos os outros usuarios onlines,
+//ao menos que a mensagem seja acompanhada de "@userName" que direciona a mensagem para um so cliente.
 void putMessageChatInLog(char *userName, char *messageChat){
 	int i;
 	char *fileName;
+	char *finalMessageChat;
 	FILE *logUser;
 	
 	fileName = (char *) calloc(50,sizeof(char));
+	finalMessageChat = (char *) calloc(150,sizeof(char));
 	
 	struct userList _users = checkActiveUsers();
 	
 	for(i=0;i<_users.size;i++){
-			
-	printf("Escrevendo mensagem no log\n");
-	fflush(stdout);
-		
-		if(strcmp(_users.name[i],userName) != 0){
+				
+		//if(strcmp(_users.name[i],userName) != 0){
 			
 			strcpy(fileName,"files/");
 			strcat(fileName,_users.name[i]);
@@ -180,13 +181,18 @@ void putMessageChatInLog(char *userName, char *messageChat){
 				printf("Erro ao criar arquivo\n");
 				fflush(stdout);
 			
-			fputs(messageChat, logUser);
+			strcat(finalMessageChat, userName);
+			strcat(finalMessageChat, ": ");
+			strcat(finalMessageChat, messageChat);
+			
+			fputs(finalMessageChat, logUser);
 			fclose(logUser);
-		}
+		//}
 		
 	}	
 }
 
+//Essa funçao recebe o userName e retorna as mensagens direcionadas para ele armazenadas pelo servidor
 struct messageList checkLog(char *userName){
 	FILE *logUser;
 	char *fileName;
@@ -210,11 +216,10 @@ struct messageList checkLog(char *userName){
 	}
 	
 	while(feof(logUser) == 0){
-		i++;
-		fscanf(logUser,"%s", line);
-	
+		//fgets usado pois a mensagem pode conter espaços
+		fgets(line,150,logUser);
 		strcpy(messages.content[i], line);
-		messages.size = i;
+		messages.size = i+1;
 	}
 	
 	fclose(logUser);

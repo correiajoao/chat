@@ -24,6 +24,7 @@ int main(){
 	char *userName;
 	pid_t pid;
 	struct userList _users;
+	struct messageList _messages;
 	int fluxo;	
 
 	//Variáveis de mensagens
@@ -133,6 +134,18 @@ int main(){
 						case MESSAGECHAT:{
 							putMessageChatInLog(userName, msgContent);
 							break;
+						}case UPDATECHAT:{
+							int i = 0;
+							_messages = checkLog(userName);
+								
+							for(i=0;i<_messages.size;i++){
+								printf("Enviando mensagens : %s\n", _messages.content[i]);
+								fflush(stdout);
+								send(remoteSocket,generateMessage(_messages.content[i],MESSAGECHAT),MAXDATASIZE,0);
+							}
+							
+							send(remoteSocket,generateMessage("",FINISHED),MAXDATASIZE,0);
+							break;
 						}case CLOSE:{
 							removeUser(userName);
 							break;
@@ -140,7 +153,7 @@ int main(){
 
 					}
 				}else{
-					putMessageChatInLog(userName,"Estou indo embora");
+					putMessageChatInLog(userName,"Estou indo embora\n");
 					removeUser(userName);
 					close(remoteSocket);
 					break;

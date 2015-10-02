@@ -21,6 +21,7 @@ int main(){
 	//Variáveis Comuns
 	char *userName;
 	struct userList _users;
+	struct messageList _messages;
 	char *msg;
 	char *bufferRcv;
 	char *_bufferRcv;
@@ -113,25 +114,49 @@ int main(){
 								
 									numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 									bufferRcv[numBytes] = '\0';
-									strcpy(_bufferRcv, bufferRcv);						
+									strcpy(_bufferRcv, bufferRcv);
+									
+									if(checkKindMessage(_bufferRcv) == FINISHED){
+										printUserList(_users);		
+										sleep(2);//Mudar pela verificaçao do buffer
+								
+									}
+									strcpy(_bufferRcv, bufferRcv);
 								}
-								
-								printUserList(_users);
-								
-								sleep(5);//Mudar pela verificaçao do buffer
 								
 							break;
 							}case 2:{
-								
 								isChatting = 1;
 								while(isChatting){
+									
+									msg = generateMessage("", UPDATECHAT);
+									send(localSocket, msg, MAXDATASIZE, 0);	
+									
+									int i = 0;
+									_messages.size = i;
+									
 									numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 									bufferRcv[numBytes] = '\0';
 									strcpy(_bufferRcv, bufferRcv);
+									
+									while(checkKindMessage(_bufferRcv) != FINISHED){
+										_messages.size = i+1;	
+										strcpy(_messages.content[i], checkMessage(bufferRcv));
+										i++;
+								
+										numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
+										bufferRcv[numBytes] = '\0';
+										strcpy(_bufferRcv, bufferRcv);
 										
-									if(checkKindMessage(_bufferRcv) == MESSAGECHAT){
-										printf("Mensagem : %s", checkMessage(bufferRcv));
-									}
+										if(checkKindMessage(_bufferRcv) == FINISHED){
+											printf("Tamanho da mensagem recebida %d\n", _messages.size);
+											printMessageList(_messages);		
+											sleep(2);//Mudar pela verificaçao do buffer
+										}
+										
+										strcpy(_bufferRcv, bufferRcv);
+										isChating = 0;
+									}									
 								}
 								
 							break;	
