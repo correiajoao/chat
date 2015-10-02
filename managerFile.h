@@ -3,6 +3,16 @@ void deleteFiles(){
 	remove("files/users.txt");		
 }
 
+void deleteUserFiles(char *userName){
+	char *fileName;
+	
+	strcpy(fileName,"files/");
+	strcat(fileName,userName);
+	strcat(fileName,".txt");
+	
+	remove(fileName);
+}
+
 //Essa função verifica se o useName é válido
 int checkUserName(char *userName){
 							
@@ -62,7 +72,6 @@ void insertUser(char *userName, char *address){
 
 //Remove um usuário da lista de usuários onlines
 void removeUser(char *userName){
-	printf("Função removeUser\n");
 	fflush(stdout);
 	int control = 0;
 	
@@ -78,7 +87,7 @@ void removeUser(char *userName){
 	_line =(char *) calloc (150,sizeof(char));
 	token =(char *) calloc (50,sizeof(char));
 	_token =(char *) calloc (50,sizeof(char));
-
+	
 	users = fopen("files/users.txt","r+");
 		if(!users)
 			errorOpenFile();
@@ -167,8 +176,7 @@ void putMessageChatInLog(char *userName, char *messageChat){
 	
 	for(i=0;i<_users.size;i++){
 				
-		//if(strcmp(_users.name[i],userName) != 0){
-			
+		if(strcmp(_users.name[i],userName) != 0){
 			strcpy(fileName,"files/");
 			strcat(fileName,_users.name[i]);
 			strcat(fileName,".txt");
@@ -184,10 +192,13 @@ void putMessageChatInLog(char *userName, char *messageChat){
 			strcat(finalMessageChat, userName);
 			strcat(finalMessageChat, ": ");
 			strcat(finalMessageChat, messageChat);
+			strcat(finalMessageChat, "\n");
 			
 			fputs(finalMessageChat, logUser);
+			printf("Mensagem posta no log de %s por %s, conteudo %s", _users.name[i], userName, messageChat);
+			fflush(stdout);
 			fclose(logUser);
-		//}
+		}
 		
 	}	
 }
@@ -216,10 +227,10 @@ struct messageList checkLog(char *userName){
 	}
 	
 	while(feof(logUser) == 0){
-		//fgets usado pois a mensagem pode conter espaços
 		fgets(line,150,logUser);
 		strcpy(messages.content[i], line);
-		messages.size = i+1;
+		messages.size = i;
+		i++;
 	}
 	
 	fclose(logUser);

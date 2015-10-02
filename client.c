@@ -126,8 +126,8 @@ int main(){
 								
 							break;
 							}case 2:{
-								isChatting = 1;
-								while(isChatting){
+								//isChatting = 1;
+								//while(isChatting){
 									
 									msg = generateMessage("", UPDATECHAT);
 									send(localSocket, msg, MAXDATASIZE, 0);	
@@ -151,12 +151,12 @@ int main(){
 										if(checkKindMessage(_bufferRcv) == FINISHED){
 											printf("Tamanho da mensagem recebida %d\n", _messages.size);
 											printMessageList(_messages);		
-											sleep(2);//Mudar pela verificaçao do buffer
+											sleep(5);//Mudar pela verificaçao do buffer
 										}
 										
 										strcpy(_bufferRcv, bufferRcv);
-										isChating = 0;
-									}									
+									//	isChatting = 0;
+								    //}									
 								}
 								
 							break;	

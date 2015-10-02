@@ -137,7 +137,7 @@ int main(){
 						}case UPDATECHAT:{
 							int i = 0;
 							_messages = checkLog(userName);
-								
+							
 							for(i=0;i<_messages.size;i++){
 								printf("Enviando mensagens : %s\n", _messages.content[i]);
 								fflush(stdout);
@@ -153,8 +153,9 @@ int main(){
 
 					}
 				}else{
-					putMessageChatInLog(userName,"Estou indo embora\n");
+					putMessageChatInLog(userName,"Estou indo embora");
 					removeUser(userName);
+					deleteUserFiles(userName);
 					close(remoteSocket);
 					break;
 				}
