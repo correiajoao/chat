@@ -60,7 +60,6 @@ void printUserList(struct userList _users){
 
 void printMessageList(struct messageList _messages){
 	int i = 0;
-	header("MENSAGENS DE BATE PAPO");
 	for(i=0;i<_messages.size;i++){
 		printf("-->> %s\n",_messages.content[i]);
 	}

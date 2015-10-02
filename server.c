@@ -119,6 +119,8 @@ int main(){
 				
 				//Se o cliente fechar a conexao o processo filho e terminado
 				if(isActive){
+					printf("Mensagem recebida\n");
+					fflush(stdout);
 					switch(msgKind){
 						case ACTIVEUSERS:{
 								int i = 0;
@@ -132,6 +134,8 @@ int main(){
 							break;
 						}
 						case MESSAGECHAT:{
+							printf("MessageChat recebida\n");
+							fflush(stdout);
 							putMessageChatInLog(userName, msgContent);
 							break;
 						}case UPDATECHAT:{

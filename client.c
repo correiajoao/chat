@@ -10,11 +10,20 @@
 //Cabeçalhos 
 #include "structs.h"
 #include "interface.h"
+#include "kbhit.h"
 #include "error.h"
 #include "managerMessage.h"
 #include "managerFile.h"
 #define MAXDATASIZE 1500
 #define MAXALLOC 500
+
+
+void flush_in() 
+{ 
+   int ch;
+
+   while( (ch = fgetc(stdin)) != EOF && ch != '\n' ){} 
+}
 
 int main(){
 
@@ -29,6 +38,8 @@ int main(){
 	int fluxo;
 	int opc,opc2;
 	int numBytes;
+	
+	char c = 'b';
 
 	//Variáves de socket
 	int conection;
@@ -126,38 +137,53 @@ int main(){
 								
 							break;
 							}case 2:{
-								//isChatting = 1;
-								//while(isChatting){
-									
-									msg = generateMessage("", UPDATECHAT);
-									send(localSocket, msg, MAXDATASIZE, 0);	
-									
-									int i = 0;
-									_messages.size = i;
-									
-									numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
-									bufferRcv[numBytes] = '\0';
-									strcpy(_bufferRcv, bufferRcv);
-									
-									while(checkKindMessage(_bufferRcv) != FINISHED){
-										_messages.size = i+1;	
-										strcpy(_messages.content[i], checkMessage(bufferRcv));
-										i++;
+								header("MENSAGENS DE BATE PAPO");
+								char message[100];
 								
+								isChatting = 1;
+								while(isChatting){
+									flush_in();
+									 while(!kbhit()){
+										//printf("Sem teclas\n");
+										msg = generateMessage("", UPDATECHAT);
+										send(localSocket, msg, MAXDATASIZE, 0);	
+
+										int i = 0;
+										_messages.size = i;
+
 										numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 										bufferRcv[numBytes] = '\0';
 										strcpy(_bufferRcv, bufferRcv);
-										
-										if(checkKindMessage(_bufferRcv) == FINISHED){
-											printf("Tamanho da mensagem recebida %d\n", _messages.size);
-											printMessageList(_messages);		
-											sleep(5);//Mudar pela verificaçao do buffer
+
+										while(checkKindMessage(_bufferRcv) != FINISHED){
+											_messages.size = i+1;	
+											strcpy(_messages.content[i], checkMessage(bufferRcv));
+											i++;
+
+											numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
+											bufferRcv[numBytes] = '\0';
+											strcpy(_bufferRcv, bufferRcv);
+
+											if(checkKindMessage(_bufferRcv) == FINISHED){
+												printf("Tamanho da mensagem recebida %d\n", _messages.size);
+												printMessageList(_messages);		
+												sleep(1);//Mudar pela verificaçao do buffer
+											}
+
+											strcpy(_bufferRcv, bufferRcv);
 										}
-										
-										strcpy(_bufferRcv, bufferRcv);
-									//	isChatting = 0;
-								    //}									
-								}
+										 sleep(1);
+									}
+									
+									c = getchar();
+									if(c == 'm'){	
+										printf("Digite sua mensagem: ");
+										scanf(" %s", message);
+										msg = generateMessage(message, MESSAGECHAT);
+										send(localSocket, msg, MAXDATASIZE, 0);
+									}
+									
+							}
 								
 							break;	
 							}case 3:{
