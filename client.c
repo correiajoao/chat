@@ -5,7 +5,6 @@
 	GitHub: www.github.com/correiajoao/chat 
 */
 
-
 #include <stdio.h>
 #include <netdb.h>
 #include <stdlib.h>
