@@ -1,12 +1,23 @@
+/*
+	Universidade Federal de Alagoas - Campus A.C Simões
+	Desenvolvedor: João Correia
+	Data: 25/09/2015
+	GitHub: www.github.com/correiajoao/chat 
+*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "managerdata.h"
+
 //Essa função limpa todos os arquivos usados pelo programa
 void deleteFiles(){
-	remove("files/users.txt");		
+	remove("file/users.txt");		
 }
 
 void deleteUserFiles(char *userName){
 	char *fileName;
 	
-	strcpy(fileName,"files/");
+	strcpy(fileName,"file/");
 	strcat(fileName,userName);
 	strcat(fileName,".txt");
 	
@@ -23,7 +34,7 @@ int checkUserName(char *userName){
 	line = (char *) calloc (150,sizeof(char));
 	token = (char *) calloc (150,sizeof(char));
 
-	users = fopen("files/users.txt","r");
+	users = fopen("file/users.txt","r");
 	
 	if(!users){
 		return 0;
@@ -51,7 +62,7 @@ void insertUser(char *userName, char *address){
 	putInFile = (char *) calloc (150,sizeof(char));
 	
 	//Tenta abrir o arquivo de usuários, se nao existir(situação onde não existem usuários ativos) o arquivo é criado
-	users = fopen("files/users.txt","a+");
+	users = fopen("file/users.txt","a+");
 	
 	if(!users)
 			errorOpenFile();			
@@ -88,11 +99,11 @@ void removeUser(char *userName){
 	token =(char *) calloc (50,sizeof(char));
 	_token =(char *) calloc (50,sizeof(char));
 	
-	users = fopen("files/users.txt","r+");
+	users = fopen("file/users.txt","r+");
 		if(!users)
 			errorOpenFile();
 	
-	_users = fopen("files/usersTemp.txt","w+");
+	_users = fopen("file/usersTemp.txt","w+");
 		if(!_users)
 			errorOpenFile();
 	
@@ -121,11 +132,11 @@ void removeUser(char *userName){
 	
 	//Verifica se existe pelo menos um usuário, se não os arquivos de usuários serão apagados
 	if(control){
-		remove("files/users.txt");
-		rename("files/usersTemp.txt","files/users.txt");
+		remove("file/users.txt");
+		rename("file/usersTemp.txt","files/users.txt");
 	}else{
-		remove("files/users.txt");
-		remove("files/usersTemp.txt");
+		remove("file/users.txt");
+		remove("file/usersTemp.txt");
 	}
 	
 	printf("Usuário desconectado : %s\n", userName);
@@ -146,7 +157,7 @@ struct userList checkActiveUsers(){
 	struct userList _users;
 
 	_users.size = i;
-	users = fopen("files/users.txt","r");
+	users = fopen("file/users.txt","r");
 	
 	while(feof(users) == 0){
 		fscanf(users,"%s", line);
@@ -177,7 +188,7 @@ void putMessageChatInLog(char *userName, char *messageChat){
 	for(i=0;i<_users.size;i++){
 				
 		if(strcmp(_users.name[i],userName) != 0){
-			strcpy(fileName,"files/");
+			strcpy(fileName,"file/");
 			strcat(fileName,_users.name[i]);
 			strcat(fileName,".txt");
 				
@@ -216,7 +227,7 @@ struct messageList checkLog(char *userName){
 	fileName = (char *) calloc(50,sizeof(char));
 	line = (char *) calloc (150,sizeof(char));
 	
-	strcpy(fileName,"files/");
+	strcpy(fileName,"file/");
 	strcat(fileName,userName);
 	strcat(fileName,".txt");
 	
@@ -238,5 +249,3 @@ struct messageList checkLog(char *userName){
 	
 	return messages;
 }
-
-

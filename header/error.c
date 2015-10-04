@@ -1,3 +1,13 @@
+/*
+	Universidade Federal de Alagoas - Campus A.C Simões
+	Desenvolvedor: João Correia
+	Data: 25/09/2015
+	GitHub: www.github.com/correiajoao/chat 
+*/
+
+#include "error.h"
+#include <stdlib.h>
+
 //Alerta erros na criação de sockets 
 void errorSocket(){
 	perror("Erro ao criar socket");

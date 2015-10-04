@@ -1,10 +1,3 @@
-/*
-	Universidade Federal de Alagoas - Campus A.C Simões
-	Desenvolvedor: João Correia
-	Data: 25/09/2015
-	GitHub: www.github.com/correiajoao/chat 
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -15,10 +8,11 @@
 #include <arpa/inet.h>
 
 //Cabeçalhos 
-#include "header/struct.h"
+#include "header/structs.h"
+#include "header/interface.h"
 #include "header/error.h"
-#include "header/message.h"
-#include "header/managerdata.h"
+#include "header/managerMessage.h"
+#include "header/managerFile.h"
 
 #define MAXDATASIZE 1500
 #define MAXALLOC 500
