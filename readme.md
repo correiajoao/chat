@@ -1,9 +1,8 @@
-
 Para compilar o projeto basta entrar no diretório e executar o seguinte comando:
-	>> bash compile.sh
+>> bash compile.sh
 
-Logo após execute o servidor com o comando: 
-	>> ./server
+Logo após execute o servidor com o comando:
+>> ./server
 
 E inicie quantos clientes forem necessarios com:
-	>> ./client
+>> ./client
