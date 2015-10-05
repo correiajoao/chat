@@ -76,8 +76,9 @@ void insertUser(char *userName, char *address){
 						
 	fclose(users);
 	
-	printf("Usuário conectado %s\n", putInFile);
+	printf("Usuário conectado: %s\n", putInFile);
 	fflush(stdout);
+	putMessageChatInLog(userName,"Conectado!");
 }
 
 
@@ -112,7 +113,6 @@ void removeUser(char *userName){
 		strcpy(_line, line);
 		token = strtok(_line,"@");	
 		
-		printf("Nome testado %s\n", token);
 		fflush(stdout);
 		
 		//Isso corrige um bug implementado por satanás, não sei porque ele lê o ultimo nome do arquivo duas vezes
@@ -133,14 +133,16 @@ void removeUser(char *userName){
 	//Verifica se existe pelo menos um usuário, se não os arquivos de usuários serão apagados
 	if(control){
 		remove("file/users.txt");
-		rename("file/usersTemp.txt","files/users.txt");
+		rename("file/usersTemp.txt","file/users.txt");
 	}else{
 		remove("file/users.txt");
 		remove("file/usersTemp.txt");
 	}
 	
-	printf("Usuário desconectado : %s\n", userName);
+	printf("Usuário desconectado: %s\n", userName);
 	fflush(stdout);
+	
+	putMessageChatInLog(userName,"Desconectando!");
 }
 
 //Essa função retorna uma lista de usuários ativos
@@ -192,13 +194,7 @@ void putMessageChatInLog(char *userName, char *messageChat){
 			strcat(fileName,_users.name[i]);
 			strcat(fileName,".txt");
 				
-			printf("Nome do arquivo: %s\n", fileName);
-			fflush(stdout);
-			
 			logUser = fopen(fileName, "a+");
-			if(!logUser)	
-				printf("Erro ao criar arquivo\n");
-				fflush(stdout);
 			
 			strcat(finalMessageChat, userName);
 			strcat(finalMessageChat, ": ");
@@ -206,7 +202,6 @@ void putMessageChatInLog(char *userName, char *messageChat){
 			strcat(finalMessageChat, "\n");
 			
 			fputs(finalMessageChat, logUser);
-			printf("Mensagem posta no log de %s por %s, conteudo %s", _users.name[i], userName, messageChat);
 			fflush(stdout);
 			fclose(logUser);
 		}

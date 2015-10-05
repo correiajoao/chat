@@ -163,7 +163,6 @@ int main(){
 
 					}
 				}else{
-					putMessageChatInLog(userName,"Estou indo embora");
 					removeUser(userName);
 					deleteUserFiles(userName);
 					close(remoteSocket);
