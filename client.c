@@ -164,7 +164,6 @@ int main(){
 											strcpy(_bufferRcv, bufferRcv);
 
 											if(checkKindMessage(_bufferRcv) == FINISHED){
-												printf("Tamanho da mensagem recebida %d\n", _messages.size);
 												printMessageList(_messages);		
 												sleep(1);//Mudar pela verificaçao do buffer
 											}
@@ -175,11 +174,13 @@ int main(){
 									}
 									
 									c = getchar();
-									if(c == 'm'){	
-										printf("Digite sua mensagem: ");
+									if(c == '#'){	
+										printf("Voce: ");
 										scanf(" %s", message);
 										msg = generateMessage(message, MESSAGECHAT);
 										send(localSocket, msg, MAXDATASIZE, 0);
+									}else{
+									
 									}
 									
 							}

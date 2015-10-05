@@ -125,8 +125,6 @@ int main(){
 				
 				//Se o cliente fechar a conexao o processo filho e terminado
 				if(isActive){
-					printf("Mensagem recebida\n");
-					fflush(stdout);
 					switch(msgKind){
 						case ACTIVEUSERS:{
 								int i = 0;
@@ -140,8 +138,6 @@ int main(){
 							break;
 						}
 						case MESSAGECHAT:{
-							printf("MessageChat recebida\n");
-							fflush(stdout);
 							putMessageChatInLog(userName, msgContent);
 							break;
 						}case UPDATECHAT:{
@@ -149,8 +145,6 @@ int main(){
 							_messages = checkLog(userName);
 							
 							for(i=0;i<_messages.size;i++){
-								printf("Enviando mensagens : %s\n", _messages.content[i]);
-								fflush(stdout);
 								send(remoteSocket,generateMessage(_messages.content[i],MESSAGECHAT),MAXDATASIZE,0);
 							}
 							

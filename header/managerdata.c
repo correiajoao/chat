@@ -76,7 +76,7 @@ void insertUser(char *userName, char *address){
 						
 	fclose(users);
 	
-	printf("Usuário conectado: %s\n", putInFile);
+	printf("Usuário conectado: %s", putInFile);
 	fflush(stdout);
 	putMessageChatInLog(userName,"Conectado!");
 }

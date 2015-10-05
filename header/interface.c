@@ -53,7 +53,6 @@ void printSecondMenuOptions(){
 void printUserList(struct userList _users){
 	int i = 0;
 	header("LISTA DE USUARIOS ATIVOS");								
-	printf("Tamanho da lista recebida %d\n", _users.size);
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", __TIME__);
 	for(i=0;i<_users.size;i++){
 	printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
