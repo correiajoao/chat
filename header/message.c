@@ -11,10 +11,8 @@
 
 //Essa função recebe um conteúdo e um tipo de mensagem, assim gera uma string pronta para ser enviada através do método send().
 char* generateMessage(char *value, int type){
-	char *result, *tag, *content;
+	char *result, tag[15], content[300];
 
-	tag = (char *) calloc (15,sizeof(char));
-	content = (char *) calloc (strlen(value),sizeof(char));
 	result = (char *) calloc ((strlen(value)+10),sizeof(char));
 	
 	switch(type){
@@ -80,7 +78,6 @@ char* generateMessage(char *value, int type){
 //Essa função recebe uma string e retorna somente o seu tipo.
 int checkKindMessage(char *bufferRcv){	
 	char *tag;
-	tag = (char *) calloc (50,sizeof(char));
 	tag = strtok(bufferRcv, "=");	
 	
 	if(strcmp(tag, "userName") == 0){
@@ -108,8 +105,7 @@ int checkKindMessage(char *bufferRcv){
 //Essa função recebe uma mensagem e retorna somente o seu conteúdo.
 char* checkMessage(char *bufferRcv){
 	char *token;
-	token = (char *) calloc (50,sizeof(char));
-
+	
 	token = strtok(bufferRcv, "=");	
 	token = strtok(NULL,"=");
 

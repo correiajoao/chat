@@ -26,30 +26,27 @@
 
 int main(){
 	//Variáveis Comuns
-	char *userName;
+	char userName[50];
+	char messageChat[250];
+	char *bufferSend;
+	char *bufferRcv;
+	char *_bufferRcv;
+	
+	int flow,opc,opc2,numBytes,isChatting;
 	
 	struct userList _users;
 	struct messageList _messages;
-	char *msg;
-	char *bufferRcv;
-	char *_bufferRcv;
-	int isChatting;
-	int fluxo;
-	int opc,opc2;
-	int numBytes;
 	
 	char c = 'b';
 
 	//Variáves de socket
-	int conection;
-	int localSocket;
+	int localSocket,conection;
 	struct sockaddr_in remoto;	
 	
 	//Alocação de memória
 	bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));
 	_bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));
-	msg = (char *) calloc (MAXALLOC, sizeof(char));
-	userName = (char *) calloc (MAXALLOC, sizeof(char));
+	bufferSend = (char *) calloc (MAXALLOC, sizeof(char));
 
 	localSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(localSocket == -1)
@@ -74,14 +71,14 @@ int main(){
 
 		switch(opc){
 			case 1:{
-				fluxo = 0;				
-				while(!fluxo){	
+				flow = 0;				
+				while(!flow){	
 					header("Fase inicial");
 					printf("Escolha seu apelido : ");
 					scanf(" %s", userName);	
 				
-					msg = generateMessage(userName, USERNAME);
-					send(localSocket, msg, MAXDATASIZE, 0);	
+					bufferSend = generateMessage(userName, USERNAME);
+					send(localSocket, bufferSend, MAXDATASIZE, 0);	
 					
 					numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 					bufferRcv[numBytes] = '\0';
@@ -90,25 +87,25 @@ int main(){
 					if(checkKindMessage(_bufferRcv) == CONNECTED){
 						printAlert("Conexão estabelecida");
 						sleep(1);
-						fluxo = 1;
+						flow = 1;
 					}else if(checkKindMessage(_bufferRcv) == INVALIDUSERNAME){
 						printAlert("Nome inválido");
 						sleep(1);
-						fluxo = 0;
+						flow = 0;
 					}
 				}
 				
 				
-				fluxo = 0;				
-				while(!fluxo){	
+				flow = 0;				
+				while(!flow){	
 						header("BATE PAPO ATIVO");
 						printSecondMenuOptions();
 						scanf("%d", &opc2);
 				
 						switch(opc2){
 							case 1:{
-								msg = generateMessage("", ACTIVEUSERS);
-								send(localSocket, msg, MAXDATASIZE, 0);	
+								bufferSend = generateMessage("", ACTIVEUSERS);
+								send(localSocket, bufferSend, MAXDATASIZE, 0);	
 							
 								int i = 0;
 								_users.size = i;
@@ -137,15 +134,14 @@ int main(){
 							break;
 							}case 2:{
 								header("MENSAGENS DE BATE PAPO");
-								char message[100];
 								
 								isChatting = 1;
 								while(isChatting){
 									flush_in();
 									 while(!kbhit()){
 										//printf("Sem teclas\n");
-										msg = generateMessage("", UPDATECHAT);
-										send(localSocket, msg, MAXDATASIZE, 0);	
+										bufferSend = generateMessage("", UPDATECHAT);
+										send(localSocket, bufferSend, MAXDATASIZE, 0);	
 
 										int i = 0;
 										_messages.size = i;
@@ -176,11 +172,11 @@ int main(){
 									c = getchar();
 									if(c == '#'){	
 										printf("Voce: ");
-										scanf(" %s", message);
-										msg = generateMessage(message, MESSAGECHAT);
-										send(localSocket, msg, MAXDATASIZE, 0);
+										scanf(" %[^\n]s", messageChat);
+										bufferSend = generateMessage(messageChat, MESSAGECHAT);
+										send(localSocket, bufferSend, MAXDATASIZE, 0);
 									}else{
-									
+										flush_in();
 									}
 									
 							}
@@ -197,8 +193,16 @@ int main(){
 			}case 2:{
 							
 			}case 3:{
+				free(bufferSend);
+				free(bufferRcv);
+				free(_bufferRcv);
 				return 0;			
 			}
-		}	
+		}
+		
+		free(bufferSend);
+		free(bufferRcv);
+		free(_bufferRcv);
+				
 		return 0;
 }

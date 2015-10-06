@@ -26,24 +26,18 @@
 
 
 int main(){
-	//Variáveis comuns
-	char *userName;
+	//Variaveis comuns
 	pid_t pid;
-	struct userList _users;
-	struct messageList _messages;
-	int fluxo;	
-
-	//Variáveis de mensagens
+	int fluxo,msgKind;
+	char userName[50];
 	char *bufferRcv;
 	char *_bufferRcv;
-	char *msgContent;
-	int msgKind;	
+	char *msgContent;	
+	struct userList _users;
+	struct messageList _messages;
 	
 	//Variaveis de socket
-	int localSocket;
-	int remoteSocket;
-
-	int structSize;
+	int localSocket,remoteSocket,structSize;
 	struct sockaddr_in local;
 	struct sockaddr_in remote;
 	
@@ -51,8 +45,7 @@ int main(){
 	bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));
 	_bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));	
 	msgContent = (char *) calloc (MAXALLOC, sizeof(char));	
-	userName = (char *) calloc (MAXALLOC, sizeof(char));
-
+	
 	//Apagando todos os dados de seções passadas
 	deleteFiles();
 
@@ -63,7 +56,6 @@ int main(){
 	local.sin_family = AF_INET; 
 	local.sin_port = htons(31337);  	
 	local.sin_addr.s_addr = INADDR_ANY;
-	
 	bzero(&(local.sin_zero), 8);// Trocar por memset
 
 	if(bind(localSocket, (struct sockaddr *)&local, sizeof(local)) == -1)
