@@ -47,8 +47,10 @@ int main(){
 	msgContent = (char *) calloc (MAXALLOC, sizeof(char));	
 	
 	//Apagando todos os dados de seções passadas
-	deleteFiles();
-
+	deleteFile();
+	//Criando diretórios necessários
+	makeDirectory();
+	
 	localSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(localSocket == -1)
 		errorSocket();

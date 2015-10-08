@@ -10,8 +10,13 @@
 #include "managerdata.h"
 
 //Essa função limpa todos os arquivos usados pelo programa
-void deleteFiles(){
-	remove("file/users.txt");		
+void deleteFile(){
+	remove("file/users.txt");
+	system("rm -rf file");
+}
+
+void makeDirectory(){
+	system("mkdir file");		
 }
 
 void deleteUserFiles(char *userName){
@@ -77,9 +82,6 @@ void insertUser(char *userName, char *address){
 	
 	printf("Usuário conectado: %s", putInFile);
 	fflush(stdout);
-	putMessageChatInLog(userName,"Conectado!");
-	
-	return;
 }
 
 
@@ -107,18 +109,20 @@ void removeUser(char *userName){
 			errorOpenFile();
 	
 	while(feof(users) == 0){
+		memset (line,'\0',299);
+		memset (_line,'\0',299);
+	
 		fscanf(users,"%s", line);
 		strcpy(_line, line);
 		token = strtok(_line,"@");
 		
 		//Isso corrige um bug implementado por satanás, não sei porque ele lê o ultimo nome do arquivo duas vezes
-		if(strcmp(_token,token) != 0){	
+		
 			if(strcmp(token,userName) != 0){
 				strcat(line,"\n");
 				fputs(line,_users);
 				control = 1;
 			}
-		}
 		
 		strcpy(_token, token);
 	}
@@ -139,7 +143,6 @@ void removeUser(char *userName){
 	fflush(stdout);
 	
 	putMessageChatInLog(userName,"Desconectando!");
-	return;
 }
 
 //Essa função retorna uma lista de usuários ativos
@@ -183,11 +186,11 @@ void putMessageChatInLog(char *userName, char *messageChat){
 
 	struct userList _users = checkActiveUsers();
 	for(i=0;i<_users.size;i++){
-		
-		printf("Usuario online: %s\n", _users.name[i]);
-		fflush(stdout);
 				
 		if(strcmp(_users.name[i],userName) != 0){
+			memset (fileName,'\0',49);
+			memset (finalMessageChat,'\0',299);
+			
 			strcpy(fileName,"file/");
 			strcat(fileName,_users.name[i]);
 			strcat(fileName,".txt");
@@ -201,18 +204,23 @@ void putMessageChatInLog(char *userName, char *messageChat){
 			
 			fputs(finalMessageChat, logUser);
 			fclose(logUser);
+		
+			fflush(stdout);
+		
 		}
 		
 	}
-	return;
 }
 
 //Essa funçao recebe o userName e retorna as mensagens direcionadas para ele armazenadas pelo servidor
 struct messageList checkLog(char *userName){
 	FILE *logUser;
 	char line[300];
+	char _line[300];
 	char fileName[50];
 	memset (line,'\0',299);
+	memset (_line,'\0',299);
+
 	memset (fileName,'\0',300);
 	
 	struct messageList messages;
@@ -231,10 +239,15 @@ struct messageList checkLog(char *userName){
 	}
 	
 	while(feof(logUser) == 0){
-		fgets(line,150,logUser);
-		strcpy(messages.content[i], line);
-		messages.size = i;
-		i++;
+		fgets(line,300,logUser);
+
+		//if(strcmp(line,_line) != 0){
+			strcpy(messages.content[i], line);
+			messages.size = i;
+			i++;
+		//}	
+		
+		strcpy(_line, line);
 	}
 	
 	fclose(logUser);
