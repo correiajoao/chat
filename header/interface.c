@@ -14,14 +14,13 @@ void header(char * indentifier){
 	int i;	
 	int size = strlen(indentifier);
 	int padding = (78 - size)/2;
-	
 	system("clear");
-
 	printf("--------------------------------------------------------------------------------\n");	
+	
 	for(i=0;i<padding; i++){
 		printf("#");
-	}	
-
+	}
+	
 	printf(" %s ", indentifier);
 	
 	for(i=0;i<padding; i++){
@@ -54,8 +53,9 @@ void printUserList(struct userList _users){
 	int i = 0;
 	header("LISTA DE USUARIOS ATIVOS");								
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", __TIME__);
+	
 	for(i=0;i<_users.size;i++){
-	printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
+		printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
 	}
 								
 	printf("\n");
@@ -64,6 +64,7 @@ void printUserList(struct userList _users){
 
 void printMessageList(struct messageList _messages){
 	int i = 0;
+	
 	for(i=0;i<_messages.size;i++){
 		printf("-->> %s\n",_messages.content[i]);
 	}

@@ -162,5 +162,11 @@ int main(){
 		}		
 	}
 	
+	if(pid != 0){
+		free(bufferRcv);
+		free(_bufferRcv);
+		free(msgContent);
+	}
+	
 	return 0;
 }
