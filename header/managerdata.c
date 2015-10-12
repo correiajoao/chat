@@ -11,7 +11,6 @@
 
 //Essa função limpa todos os arquivos usados pelo programa
 void deleteFile(){
-	remove("file/users.txt");
 	system("rm -rf file");
 }
 
@@ -47,11 +46,13 @@ int checkUserName(char *userName){
 	while(feof(users) == 0){
 		fscanf(users,"%s", line);
 		token = strtok(line,"@");	
-			
-		if(strcmp(token, userName) == 0){
-			fclose(users);
-			return 1;
-		}
+		
+		if(token != NULL){
+			if(strcmp(token, userName) == 0){
+				fclose(users);
+				return 1;
+			}
+		}	
 	}
 	
 	fclose(users);
@@ -96,9 +97,10 @@ void removeUser(char *userName){
 	memset (_line,'\0',299);
 	
 	char *token;
-	char *_token;
 	token = (char *) calloc (15, sizeof(char));
-	_token = (char *) calloc (15, sizeof(char));
+	
+	printf("Usuário a ser removido: %s\n", userName);
+	fflush(stdout);
 	
 	users = fopen("file/users.txt","r+");
 		if(!users)
@@ -116,22 +118,27 @@ void removeUser(char *userName){
 		strcpy(_line, line);
 		token = strtok(_line,"@");
 		
-		//Isso corrige um bug implementado por satanás, não sei porque ele lê o ultimo nome do arquivo duas vezes
+		printf("Nome lido :%s\n", token);
+		fflush(stdout);
 		
+		if(token != NULL){
 			if(strcmp(token,userName) != 0){
+				printf("Nome escrito no log :%s\n", token);
+				fflush(stdout);
+					
 				strcat(line,"\n");
 				fputs(line,_users);
 				control = 1;
 			}
+		}
 		
-		strcpy(_token, token);
 	}
 	
 	fclose(users);
 	fclose(_users);
 	
 	//Verifica se existe pelo menos um usuário, se não os arquivos de usuários serão apagados
-	if(control){
+	if(control == 1){
 		remove("file/users.txt");
 		rename("file/usersTemp.txt","file/users.txt");
 	}else{
@@ -164,9 +171,12 @@ struct userList checkActiveUsers(){
 		fscanf(users,"%s", line);
 		token = strtok(line,"@");	
 		
-		strcpy(_users.name[i], token);
-		_users.size = i;
-		i++;
+		if(token != NULL){
+			strcpy(_users.name[i], token);
+			_users.size = i;
+			i++;
+		}
+		
 	}
 	
 	fclose(users);
@@ -241,11 +251,9 @@ struct messageList checkLog(char *userName){
 	while(feof(logUser) == 0){
 		fgets(line,300,logUser);
 
-		//if(strcmp(line,_line) != 0){
 			strcpy(messages.content[i], line);
 			messages.size = i;
 			i++;
-		//}	
 		
 		strcpy(_line, line);
 	}

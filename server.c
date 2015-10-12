@@ -146,6 +146,8 @@ int main(){
 							break;
 						}case CLOSE:{
 							removeUser(userName);
+							deleteUserFiles(userName);
+							close(remoteSocket);
 							break;
 						}
 
