@@ -76,18 +76,18 @@ int main(){
 					printf("Escolha seu apelido : ");
 					scanf(" %s", userName);	
 				
-					bufferSend = generateMessage(userName, USERNAME);
+					bufferSend = generateMessage(userName, USERNAME,0);
 					send(localSocket, bufferSend, MAXDATASIZE, 0);	
 					
 					numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 					bufferRcv[numBytes] = '\0';
 					strcpy(_bufferRcv, bufferRcv);
 					
-					if(checkKindMessage(_bufferRcv) == CONNECTED){
+					if(checkKindMessage(_bufferRcv,0) == CONNECTED){
 						printAlert("Conexão estabelecida");
 						sleep(1);
 						flow = 1;
-					}else if(checkKindMessage(_bufferRcv) == INVALIDUSERNAME){
+					}else if(checkKindMessage(_bufferRcv,0) == INVALIDUSERNAME){
 						printAlert("Nome inválido");
 						sleep(1);
 						flow = 0;
@@ -103,7 +103,7 @@ int main(){
 				
 						switch(opc2){
 							case 1:{
-								bufferSend = generateMessage("", ACTIVEUSERS);
+								bufferSend = generateMessage("", ACTIVEUSERS,0);
 								send(localSocket, bufferSend, MAXDATASIZE, 0);	
 							
 								int i = 0;
@@ -113,7 +113,7 @@ int main(){
 								bufferRcv[numBytes] = '\0';
 								strcpy(_bufferRcv, bufferRcv);
 								
-								while(checkKindMessage(_bufferRcv) != FINISHED){
+								while(checkKindMessage(_bufferRcv,0) != FINISHED){
 									_users.size = i+1;
 									strcpy(_users.name[i], checkMessage(bufferRcv));
 									i++;
@@ -122,7 +122,7 @@ int main(){
 									bufferRcv[numBytes] = '\0';
 									strcpy(_bufferRcv, bufferRcv);
 									
-									if(checkKindMessage(_bufferRcv) == FINISHED){
+									if(checkKindMessage(_bufferRcv,0) == FINISHED){
 										printUserList(_users);		
 										sleep(2);//Mudar pela verificaçao do buffer
 								
@@ -139,7 +139,7 @@ int main(){
 									 fflush(stdin);
 									 while(!kbhit()){
 										 
-										bufferSend = generateMessage("", UPDATECHAT);
+										bufferSend = generateMessage("", UPDATECHAT,0);
 										send(localSocket, bufferSend, MAXDATASIZE, 0);	
 
 										int i = 0;
@@ -149,7 +149,7 @@ int main(){
 										bufferRcv[numBytes] = '\0';
 										strcpy(_bufferRcv, bufferRcv);
 
-										while(checkKindMessage(_bufferRcv) != FINISHED){
+										while(checkKindMessage(_bufferRcv,0) != FINISHED){
 											_messages.size = i+1;	
 											strcpy(_messages.content[i], checkMessage(bufferRcv));
 											i++;
@@ -158,7 +158,7 @@ int main(){
 											bufferRcv[numBytes] = '\0';
 											strcpy(_bufferRcv, bufferRcv);
 
-											if(checkKindMessage(_bufferRcv) == FINISHED){
+											if(checkKindMessage(_bufferRcv,0) == FINISHED){
 												printMessageList(_messages);		
 												sleep(1);//Mudar pela verificaçao do buffer
 											}
@@ -173,7 +173,7 @@ int main(){
 										printf(" Voce: ");
 										scanf(" %[^\n]s", messageChat);
 										printf("\n");
-										bufferSend = generateMessage(messageChat, MESSAGECHAT);
+										bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
 										send(localSocket, bufferSend, MAXDATASIZE, 0);
 									}else{
 										fflush(stdin);

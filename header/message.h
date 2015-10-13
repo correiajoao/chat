@@ -21,11 +21,11 @@ enum tag{
 };
 
 //Essa função recebe um conteúdo e um tipo de mensagem, assim gera uma string pronta para ser enviada através do método send().
-char* generateMessage(char *value, int type);
+char* generateMessage(char *value, int type, int isServer);
 
 //Atenção: funções modificam o ponteiro recebido como parâmetro
 //Essa função recebe uma string e retorna somente o seu tipo.
-int checkKindMessage(char *bufferRcv);
+int checkKindMessage(char *bufferRcv, int isServer);
 
 //Atenção: funções modificam o ponteiro recebido como parâmetro.
 //Essa função recebe uma mensagem e retorna somente o seu conteúdo.

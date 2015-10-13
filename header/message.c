@@ -4,13 +4,13 @@
 	Data: 25/09/2015
 	GitHub: www.github.com/correiajoao/chat 
 */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "message.h"
 
 //Essa função recebe um conteúdo e um tipo de mensagem, assim gera uma string pronta para ser enviada através do método send().
-char* generateMessage(char *value, int type){
+char* generateMessage(char *value, int type, int isServer){
 	char *result, tag[15], content[300];
 
 	result = (char *) calloc ((strlen(value)+20),sizeof(char));
@@ -71,13 +71,25 @@ char* generateMessage(char *value, int type){
 		}
 
 	}
+	
+	if(isServer){
+		printf("Mensagem gerada: %s\n", result);
+		fflush(stdout);
+	}
+	
 	return result;
 	free(result);
 }
 
 //Atenção: funções modificam o ponteiro recebido como parâmetro
 //Essa função recebe uma string e retorna somente o seu tipo.
-int checkKindMessage(char *bufferRcv){	
+int checkKindMessage(char *bufferRcv, int isServer){	
+	
+	if(isServer){
+		printf("Mensagem recebida: %s\n", bufferRcv);
+		fflush(stdout);
+	}	
+	
 	char *tag;
 	tag = strtok(bufferRcv, "=");	
 	

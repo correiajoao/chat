@@ -79,7 +79,7 @@ int main(){
 					recv(remoteSocket, bufferRcv, MAXDATASIZE,  0);
 					strcpy(_bufferRcv, bufferRcv); 		
 					
-					if(checkKindMessage(_bufferRcv) == USERNAME){
+					if(checkKindMessage(_bufferRcv,1) == USERNAME){
 						
 						//Resgata o conteudo da mensagem
 						strcpy(_bufferRcv, bufferRcv);  		
@@ -95,12 +95,12 @@ int main(){
 								insertUser(msgContent,inet_ntoa(remote.sin_addr));
 								
 								//Informa ao cliente que ele foi conectado		   
-								send(remoteSocket,generateMessage("",CONNECTED),MAXDATASIZE,0);	
+								send(remoteSocket,generateMessage("",CONNECTED,1),MAXDATASIZE,0);	
 								fluxo = 1;
 							}else{
 							
 								//Sinaliza que o nome de usuário é inválido
-								send(remoteSocket,generateMessage("",INVALIDUSERNAME),MAXDATASIZE,0);
+								send(remoteSocket,generateMessage("",INVALIDUSERNAME,1),MAXDATASIZE,0);
 								fluxo = 0;
 							}
 						}
@@ -113,7 +113,7 @@ int main(){
 				int isActive = recv(remoteSocket, bufferRcv, MAXDATASIZE,  0);
 				strcpy(_bufferRcv, bufferRcv); 		
 		
-				msgKind = checkKindMessage(_bufferRcv);
+				msgKind = checkKindMessage(_bufferRcv,1);
 				strcpy(_bufferRcv, bufferRcv);  		
 				msgContent = checkMessage(_bufferRcv);
 				
@@ -125,10 +125,10 @@ int main(){
 								_users = checkActiveUsers();
 		
 								for(i=0;i<_users.size;i++){
-									send(remoteSocket,generateMessage(_users.name[i],USERNAME),MAXDATASIZE,0);
+									send(remoteSocket,generateMessage(_users.name[i],USERNAME,1),MAXDATASIZE,0);
 								}
 							
-								send(remoteSocket,generateMessage("",FINISHED),MAXDATASIZE,0);
+								send(remoteSocket,generateMessage("",FINISHED,1),MAXDATASIZE,0);
 							break;
 						}
 						case MESSAGECHAT:{
@@ -139,10 +139,10 @@ int main(){
 							_messages = checkLog(userName);
 							
 							for(i=0;i<_messages.size;i++){
-								send(remoteSocket,generateMessage(_messages.content[i],MESSAGECHAT),MAXDATASIZE,0);
+								send(remoteSocket,generateMessage(_messages.content[i],MESSAGECHAT,1),MAXDATASIZE,0);
 							}
 							
-							send(remoteSocket,generateMessage("",FINISHED),MAXDATASIZE,0);
+							send(remoteSocket,generateMessage("",FINISHED,1),MAXDATASIZE,0);
 							break;
 						}case CLOSE:{
 							removeUser(userName);
