@@ -20,7 +20,7 @@
 #include "header/message.h"
 #include "header/managerdata.h"
 
-#define MAXDATASIZE 1500
+#define MAXDATASIZE 500
 #define MAXALLOC 500
 #define BACKLOG 5
 

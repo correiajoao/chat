@@ -21,7 +21,7 @@
 #include "header/message.h"
 #include "header/interface.h"
 
-#define MAXDATASIZE 1500
+#define MAXDATASIZE 500
 #define MAXALLOC 500
 
 int main(){
