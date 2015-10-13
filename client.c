@@ -28,6 +28,7 @@ int main(){
 	//Variáveis Comuns
 	char userName[50];
 	char messageChat[250];
+	char bufferKey;
 	char *bufferSend;
 	char *bufferRcv;
 	char *_bufferRcv;
@@ -37,8 +38,6 @@ int main(){
 	struct userList _users;
 	struct messageList _messages;
 	
-	char c = 'b';
-
 	//Variáves de socket
 	int localSocket,conection;
 	struct sockaddr_in remoto;	
@@ -137,9 +136,9 @@ int main(){
 								
 								isChatting = 1;
 								while(isChatting){
-									flush_in();
+									 fflush(stdin);
 									 while(!kbhit()){
-										//printf("Sem teclas\n");
+										 
 										bufferSend = generateMessage("", UPDATECHAT);
 										send(localSocket, bufferSend, MAXDATASIZE, 0);	
 
@@ -169,16 +168,16 @@ int main(){
 										 sleep(1);
 									}
 									
-									c = getchar();
-									if(c == '#'){	
-										printf("Voce: ");
+									bufferKey = getchar();
+									if(bufferKey == '>'){	
+										printf(" Voce: ");
 										scanf(" %[^\n]s", messageChat);
+										printf("\n");
 										bufferSend = generateMessage(messageChat, MESSAGECHAT);
 										send(localSocket, bufferSend, MAXDATASIZE, 0);
 									}else{
-										flush_in();
+										fflush(stdin);
 									}
-									
 							}
 								
 							break;	

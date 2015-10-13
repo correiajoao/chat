@@ -13,7 +13,7 @@
 char* generateMessage(char *value, int type){
 	char *result, tag[15], content[300];
 
-	result = (char *) calloc ((strlen(value)+10),sizeof(char));
+	result = (char *) calloc ((strlen(value)+20),sizeof(char));
 	
 	switch(type){
 		case USERNAME:{
@@ -72,6 +72,7 @@ char* generateMessage(char *value, int type){
 
 	}
 	return result;
+	free(result);
 }
 
 //Atenção: funções modificam o ponteiro recebido como parâmetro

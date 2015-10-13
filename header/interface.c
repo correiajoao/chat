@@ -66,7 +66,7 @@ void printMessageList(struct messageList _messages){
 	int i = 0;
 	
 	for(i=0;i<_messages.size;i++){
-		printf("-->> %s\n",_messages.content[i]);
+		printf("> %s\n",_messages.content[i]);
 	}
 }
 
