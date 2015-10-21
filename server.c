@@ -46,10 +46,13 @@ int main(){
 	_bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));	
 	msgContent = (char *) calloc (MAXALLOC, sizeof(char));	
 	
+	system("clear");
 	//Apagando todos os dados de seções passadas
 	deleteFile();
 	//Criando diretórios necessários
 	makeDirectory();
+	//Mensagem de inicio
+	printf("Servidor iniciado\n");
 	
 	localSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(localSocket == -1)
@@ -58,7 +61,7 @@ int main(){
 	local.sin_family = AF_INET; 
 	local.sin_port = htons(31337);  	
 	local.sin_addr.s_addr = INADDR_ANY;
-	bzero(&(local.sin_zero), 8);// Trocar por memset
+	memset(local.sin_zero,0,8);
 
 	if(bind(localSocket, (struct sockaddr *)&local, sizeof(local)) == -1)
 		errorBind();
@@ -121,14 +124,14 @@ int main(){
 				if(isActive){
 					switch(msgKind){
 						case ACTIVEUSERS:{
-								int i = 0;
-								_users = checkActiveUsers();
-		
-								for(i=0;i<_users.size;i++){
-									send(remoteSocket,generateMessage(_users.name[i],USERNAME,1),MAXDATASIZE,0);
-								}
+							int i = 0;
+							_users = checkActiveUsers();
 							
-								send(remoteSocket,generateMessage("",FINISHED,1),MAXDATASIZE,0);
+							for(i=0;i<_users.size;i++){
+								send(remoteSocket,generateMessage(_users.name[i],USERNAME,1),MAXDATASIZE,0);
+							}
+							
+							send(remoteSocket,generateMessage("",FINISHED,1),MAXDATASIZE,0);
 							break;
 						}
 						case MESSAGECHAT:{

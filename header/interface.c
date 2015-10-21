@@ -4,13 +4,13 @@
 	Data: 25/09/2015
 	GitHub: www.github.com/correiajoao/chat 
 */
-
+#include <time.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "interface.h"
 
-void header(char * indentifier){
+void printHeader(char * indentifier){
 	int i;	
 	int size = strlen(indentifier);
 	int padding = (78 - size)/2;
@@ -51,7 +51,7 @@ void printSecondMenuOptions(){
 
 void printUserList(struct userList _users){
 	int i = 0;
-	header("LISTA DE USUARIOS ATIVOS");								
+	printHeader("LISTA DE USUARIOS ATIVOS");								
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", __TIME__);
 	
 	for(i=0;i<_users.size;i++){
@@ -68,11 +68,6 @@ void printMessageList(struct messageList _messages){
 	for(i=0;i<_messages.size;i++){
 		printf("> %s\n",_messages.content[i]);
 	}
-}
-
-void printHowWorks(){
-	header("ENTENDA COMO FUNCIONA");
-	printf("Funciona bem ... \n");
 }
 
 void printAlert(char *message){
@@ -94,3 +89,36 @@ void printAlert(char *message){
 	}
 	printf("\n");
 }
+
+void printHowWorks(){
+	printHeader("ENTENDA COMO FUNCIONA");
+	printf("Funciona bem ... \n");
+}
+
+void printAnimation(){
+	system("clear");
+	printf("\n\n\n\n\n\n");
+	printf("888888b.            888\n");
+	usleep(100000);
+	printf("888   88b           888\n");
+	usleep(100000);
+	printf("888  .88P           888\n"); 
+	usleep(100000);
+	printf("8888888K.   8888b.  888888  .d88b.         88888b.   8888b.  88888b.   .d88b.\n");  
+	usleep(100000);
+	printf("888   Y88b      88b 888    d8P  Y8b        888  88b      88b 888  88b d88  88b\n"); 
+	usleep(100000);
+	printf("888    888 .d888888 888    88888888 888888 888  888 .d888888 888  888 888  888\n"); 
+	usleep(100000);
+	printf("888   d88P 888  888 Y88b.  Y8b.            888 d88P 888  888 888 d88P Y88..88P\n");
+	usleep(100000);
+	printf("8888888P    Y888888   Y888   Y8888         88888P    Y888888 88888P     Y88P \n"); 
+	usleep(100000);
+   	printf("                                           888               888\n");    
+	usleep(100000);
+    printf("                                           888               888\n");
+	usleep(100000);
+    printf("                                           888               888\n");  
+	sleep(2);
+}
+

@@ -9,7 +9,6 @@
 #include <string.h>
 #include "message.h"
 
-//Essa função recebe um conteúdo e um tipo de mensagem, assim gera uma string pronta para ser enviada através do método send().
 char* generateMessage(char *value, int type, int isServer){
 	char *result, tag[15], content[300];
 
@@ -81,8 +80,6 @@ char* generateMessage(char *value, int type, int isServer){
 	free(result);
 }
 
-//Atenção: funções modificam o ponteiro recebido como parâmetro
-//Essa função recebe uma string e retorna somente o seu tipo.
 int checkKindMessage(char *bufferRcv, int isServer){	
 	
 	if(isServer){
@@ -114,8 +111,6 @@ int checkKindMessage(char *bufferRcv, int isServer){
 	return 0;			
 }
 
-//Atenção: funções modificam o ponteiro recebido como parâmetro.
-//Essa função recebe uma mensagem e retorna somente o seu conteúdo.
 char* checkMessage(char *bufferRcv){
 	char *token;
 	

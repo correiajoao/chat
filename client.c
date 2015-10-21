@@ -16,7 +16,6 @@
 
 #include "header/kbhit.h"
 #include "header/error.h"
-#include "header/buffer.h"
 #include "header/struct.h"
 #include "header/message.h"
 #include "header/interface.h"
@@ -32,7 +31,6 @@ int main(){
 	char *bufferSend;
 	char *bufferRcv;
 	char *_bufferRcv;
-	
 	int flow,opc,opc2,numBytes,isChatting;
 	
 	struct userList _users;
@@ -63,8 +61,8 @@ int main(){
 	if(conection == -1)
 		errorConnection();	
 	
-	
-	header("BATE PAPO ");
+	printAnimation();
+	printHeader("BATE PAPO ");
 	printMenuOptions();
 	scanf("%d", &opc);
 
@@ -72,7 +70,7 @@ int main(){
 			case 1:{
 				flow = 0;				
 				while(!flow){	
-					header("Fase inicial");
+					printHeader("Fase inicial");
 					printf("Escolha seu apelido : ");
 					scanf(" %s", userName);	
 				
@@ -97,7 +95,7 @@ int main(){
 				
 				flow = 0;				
 				while(!flow){	
-						header("BATE PAPO ATIVO");
+						printHeader("BATE PAPO ATIVO");
 						printSecondMenuOptions();
 						scanf("%d", &opc2);
 				
@@ -124,7 +122,7 @@ int main(){
 									
 									if(checkKindMessage(_bufferRcv,0) == FINISHED){
 										printUserList(_users);		
-										sleep(2);//Mudar pela verificaçao do buffer
+										sleep(2);
 								
 									}
 									strcpy(_bufferRcv, bufferRcv);
@@ -132,7 +130,7 @@ int main(){
 								
 							break;
 							}case 2:{
-								header("MENSAGENS DE BATE PAPO");
+								printHeader("MENSAGENS DE BATE PAPO");
 								
 								isChatting = 1;
 								while(isChatting){
@@ -160,7 +158,6 @@ int main(){
 
 											if(checkKindMessage(_bufferRcv,0) == FINISHED){
 												printMessageList(_messages);		
-												sleep(1);//Mudar pela verificaçao do buffer
 											}
 
 											strcpy(_bufferRcv, bufferRcv);
@@ -175,6 +172,8 @@ int main(){
 										printf("\n");
 										bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
 										send(localSocket, bufferSend, MAXDATASIZE, 0);
+									}else if(bufferKey == 's'){
+										isChatting = 0;
 									}else{
 										fflush(stdin);
 									}

@@ -11,7 +11,7 @@
 #include "struct.h"
 
 //Essa função mostra o cabeçalho da interface
-void header(char * indentifier);
+void printHeader(char * indentifier);
 
 //Essa função mostra o menu inicial
 void printMenuOptions();
@@ -25,10 +25,13 @@ void printUserList(struct userList _users);
 //Essa função recebe uma estrutura de lista de mensagem e a imprime
 void printMessageList(struct messageList _messages);
 
+//Essa função recebe uma string e a mostra em forma de alerta
+void printAlert(char *message);
+
 //Essa função imprime como funciona o chat
 void printHowWorks();
 
-//Essa função recebe uma string e a mostra em forma de alerta
-void printAlert(char *message);
+//Essa funçao imprime na tela a apresentaçao inicial
+void printAnimation();
 
 #endif

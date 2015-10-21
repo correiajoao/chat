@@ -9,13 +9,14 @@
 #include <stdlib.h>
 #include "managerdata.h"
 
-//Essa função limpa todos os arquivos usados pelo programa
 void deleteFile(){
 	system("rm -rf file");
+	printf("Removendo arquivos\n");
 }
 
 void makeDirectory(){
-	system("mkdir file");		
+	system("mkdir file");
+	printf("Criando diretórios\n");
 }
 
 void deleteUserFiles(char *userName){
@@ -29,7 +30,6 @@ void deleteUserFiles(char *userName){
 	remove(fileName);
 }
 
-//Essa função verifica se o useName é válido
 int checkUserName(char *userName){
 							
 	FILE *users;
@@ -59,7 +59,6 @@ int checkUserName(char *userName){
 	return 0;
 }
 
-//Insere um usuário da lista de usuários onlines
 void insertUser(char *userName, char *address){
 	FILE *users;
 	char putInFile[300];
@@ -85,8 +84,6 @@ void insertUser(char *userName, char *address){
 	fflush(stdout);
 }
 
-
-//Remove um usuário da lista de usuários onlines
 void removeUser(char *userName){
 	int control = 0;	
 	FILE *users;
@@ -118,12 +115,10 @@ void removeUser(char *userName){
 		strcpy(_line, line);
 		token = strtok(_line,"@");
 		
-		printf("Nome lido :%s\n", token);
 		fflush(stdout);
 		
 		if(token != NULL){
 			if(strcmp(token,userName) != 0){
-				printf("Nome escrito no log :%s\n", token);
 				fflush(stdout);
 					
 				strcat(line,"\n");
@@ -152,7 +147,6 @@ void removeUser(char *userName){
 	putMessageChatInLog(userName,"Desconectando!");
 }
 
-//Essa função retorna uma lista de usuários ativos
 struct userList checkActiveUsers(){
 	FILE *users;
 	char *token;
@@ -183,8 +177,6 @@ struct userList checkActiveUsers(){
 	return _users;
 }
 
-//Essa funçao recebe um userName e escreve a mensagem desse usuario no log de todos os outros usuarios onlines,
-//ao menos que a mensagem seja acompanhada de "@userName" que direciona a mensagem para um so cliente.
 void putMessageChatInLog(char *userName, char *messageChat){
 	int i;
 	char fileName[50];
@@ -222,7 +214,6 @@ void putMessageChatInLog(char *userName, char *messageChat){
 	}
 }
 
-//Essa funçao recebe o userName e retorna as mensagens direcionadas para ele armazenadas pelo servidor
 struct messageList checkLog(char *userName){
 	FILE *logUser;
 	char line[300];
