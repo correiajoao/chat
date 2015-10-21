@@ -62,141 +62,146 @@ int main(){
 		errorConnection();	
 	
 	printAnimation();
-	printHeader("BATE PAPO ");
-	printMenuOptions();
-	scanf("%d", &opc);
+	
+		do{
+		printHeader("BATE PAPO ");
+		printMenuOptions();
+		scanf("%d", &opc);
+			
+			switch(opc){
+				case 1:{
+					
+					flow = 0;				
+					while(!flow){	
+						printHeader("Fase inicial");
+						printf("Escolha seu apelido : ");
+						scanf(" %s", userName);	
 
-		switch(opc){
-			case 1:{
-				flow = 0;				
-				while(!flow){	
-					printHeader("Fase inicial");
-					printf("Escolha seu apelido : ");
-					scanf(" %s", userName);	
-				
-					bufferSend = generateMessage(userName, USERNAME,0);
-					send(localSocket, bufferSend, MAXDATASIZE, 0);	
-					
-					numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
-					bufferRcv[numBytes] = '\0';
-					strcpy(_bufferRcv, bufferRcv);
-					
-					if(checkKindMessage(_bufferRcv,0) == CONNECTED){
-						printAlert("Conexão estabelecida");
-						sleep(1);
-						flow = 1;
-					}else if(checkKindMessage(_bufferRcv,0) == INVALIDUSERNAME){
-						printAlert("Nome inválido");
-						sleep(1);
-						flow = 0;
+						bufferSend = generateMessage(userName, USERNAME,0);
+						send(localSocket, bufferSend, MAXDATASIZE, 0);	
+
+						numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
+						bufferRcv[numBytes] = '\0';
+						strcpy(_bufferRcv, bufferRcv);
+
+						if(checkKindMessage(_bufferRcv,0) == CONNECTED){
+							printAlert("Conexão estabelecida");
+							sleep(1);
+							flow = 1;
+						}else if(checkKindMessage(_bufferRcv,0) == INVALIDUSERNAME){
+							printAlert("Nome inválido");
+							sleep(1);
+							flow = 0;
+						}
 					}
-				}
-				
-				
-				flow = 0;				
-				while(!flow){	
-						printHeader("BATE PAPO ATIVO");
-						printSecondMenuOptions();
-						scanf("%d", &opc2);
-				
-						switch(opc2){
-							case 1:{
-								bufferSend = generateMessage("", ACTIVEUSERS,0);
-								send(localSocket, bufferSend, MAXDATASIZE, 0);	
-							
-								int i = 0;
-								_users.size = i;
-								
-								numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
-								bufferRcv[numBytes] = '\0';
-								strcpy(_bufferRcv, bufferRcv);
-								
-								while(checkKindMessage(_bufferRcv,0) != FINISHED){
-									_users.size = i+1;
-									strcpy(_users.name[i], checkMessage(bufferRcv));
-									i++;
-								
+
+
+						do{
+							printHeader("BATE PAPO ATIVO");
+							printSecondMenuOptions();
+							scanf("%d", &opc2);
+
+							switch(opc2){
+								case 1:{
+									bufferSend = generateMessage("", ACTIVEUSERS,0);
+									send(localSocket, bufferSend, MAXDATASIZE, 0);	
+
+									int i = 0;
+									_users.size = i;
+
 									numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 									bufferRcv[numBytes] = '\0';
 									strcpy(_bufferRcv, bufferRcv);
-									
-									if(checkKindMessage(_bufferRcv,0) == FINISHED){
-										printUserList(_users);		
-										sleep(2);
-								
-									}
-									strcpy(_bufferRcv, bufferRcv);
-								}
-								
-							break;
-							}case 2:{
-								printHeader("MENSAGENS DE BATE PAPO");
-								
-								isChatting = 1;
-								while(isChatting){
-									 fflush(stdin);
-									 while(!kbhit()){
-										 
-										bufferSend = generateMessage("", UPDATECHAT,0);
-										send(localSocket, bufferSend, MAXDATASIZE, 0);	
 
-										int i = 0;
-										_messages.size = i;
+									while(checkKindMessage(_bufferRcv,0) != FINISHED){
+										_users.size = i+1;
+										strcpy(_users.name[i], checkMessage(bufferRcv));
+										i++;
 
 										numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 										bufferRcv[numBytes] = '\0';
 										strcpy(_bufferRcv, bufferRcv);
 
-										while(checkKindMessage(_bufferRcv,0) != FINISHED){
-											_messages.size = i+1;	
-											strcpy(_messages.content[i], checkMessage(bufferRcv));
-											i++;
+										if(checkKindMessage(_bufferRcv,0) == FINISHED){
+											printUserList(_users);		
+											sleep(2);
+
+										}
+										strcpy(_bufferRcv, bufferRcv);
+									}
+
+								break;
+								}case 2:{
+									printHeader("MENSAGENS DE BATE PAPO");
+
+									isChatting = 1;
+									while(isChatting){
+										 fflush(stdin);
+										 while(!kbhit()){
+
+											bufferSend = generateMessage("", UPDATECHAT,0);
+											send(localSocket, bufferSend, MAXDATASIZE, 0);	
+
+											int i = 0;
+											_messages.size = i;
 
 											numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
 											bufferRcv[numBytes] = '\0';
 											strcpy(_bufferRcv, bufferRcv);
 
-											if(checkKindMessage(_bufferRcv,0) == FINISHED){
-												printMessageList(_messages);		
-											}
+											while(checkKindMessage(_bufferRcv,0) != FINISHED){
+												_messages.size = i+1;	
+												strcpy(_messages.content[i], checkMessage(bufferRcv));
+												i++;
 
-											strcpy(_bufferRcv, bufferRcv);
+												numBytes = recv(localSocket, bufferRcv, MAXDATASIZE, 0);
+												bufferRcv[numBytes] = '\0';
+												strcpy(_bufferRcv, bufferRcv);
+
+												if(checkKindMessage(_bufferRcv,0) == FINISHED){
+													printMessageList(_messages);		
+												}
+
+												strcpy(_bufferRcv, bufferRcv);
+											}
+											 sleep(1);
 										}
-										 sleep(1);
-									}
-									
-									bufferKey = getchar();
-									if(bufferKey == '>'){	
-										printf(" Voce: ");
-										scanf(" %[^\n]s", messageChat);
-										printf("\n");
-										bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
-										send(localSocket, bufferSend, MAXDATASIZE, 0);
-									}else if(bufferKey == 's'){
-										isChatting = 0;
-									}else{
-										fflush(stdin);
-									}
+
+										bufferKey = getchar();
+										if(bufferKey == '>'){	
+											printf(" Voce: ");
+											scanf(" %[^\n]s", messageChat);
+											printf("\n");
+											bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
+											send(localSocket, bufferSend, MAXDATASIZE, 0);
+										}else if(bufferKey == 's'){
+											isChatting = 0;
+										}else{
+											fflush(stdin);
+										}
+								}
+
+								break;	
+								}case 3:{
+									printAlert("Até mais ver, em francês, Au revoir");
+									return 0;
+								break;
+								}
+
 							}
-								
-							break;	
-							}case 3:{
-								printAlert("Até mais ver, em francês, Au revoir");
-								return 0;
-							break;
-							}
-					
-						}				
-				}
-			}case 2:{
-							
-			}case 3:{
-				free(bufferSend);
-				free(bufferRcv);
-				free(_bufferRcv);
-				return 0;			
+						}while(opc2 != 3);
+					break;
+				}case 2:{
+					printHowWorks();
+					break;
+				}case 3:{
+					free(bufferSend);
+					free(bufferRcv);
+					free(_bufferRcv);
+					return 0;
+				}	
 			}
-		}
+		}while(opc != 3);	
 		
 		free(bufferSend);
 		free(bufferRcv);
