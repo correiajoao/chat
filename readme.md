@@ -1,9 +1,12 @@
 To build the project: 
->> bash compile.sh
-
+```
+	bash make.sh
+```
 To start the server:
->> ./server
-
+```
+	./server
+```
 To start the client:
->> ./client
- 
+```
+	./client
+``` 
