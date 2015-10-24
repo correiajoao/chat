@@ -180,15 +180,64 @@ struct userList checkActiveUsers(){
 void putMessageChatInLog(char *userName, char *messageChat){
 	int i;
 	char fileName[50];
-	char finalMessageChat[300];	
+	char _messageChat[300];
+	char finalMessageChat[300];
+	
 	memset (fileName,'\0',49);
+	memset (_messageChat,'\0', 299);
 	memset (finalMessageChat,'\0',299);
-
+	
 	FILE *logUser;
 
 	struct userList _users = checkActiveUsers();
+	
+	//Se a mensagem e privada	
+	if(messageChat[0] == '@'){
+		char *token;
+		char userDestination[50];
+		
+		strcpy(_messageChat, messageChat);
+
+		token = strtok(_messageChat," ");
+		strcpy(userDestination, token);
+	
+		for(i=1;i<strlen(userDestination); i++){
+			userDestination[i-1] = userDestination[i];
+			
+			if(i+1 == strlen(userDestination)){
+				userDestination[i] = '\0';
+			}
+		}
+	
+		token = strtok(NULL,"\n");
+		strcpy(messageChat, token);
+		
+		for(i=0;i<_users.size;i++){
+			if(strcmp(_users.name[i],userName) != 0 && strcmp(_users.name[i],userDestination) == 0){
+				memset (fileName,'\0',49);
+				memset (finalMessageChat,'\0',299);
+
+				strcpy(fileName,"file/");
+				strcat(fileName,_users.name[i]);
+				strcat(fileName,".txt");
+
+				logUser = fopen(fileName, "a+");
+
+				strcat(finalMessageChat, "(Privado) ");
+				strcat(finalMessageChat, userName);
+				strcat(finalMessageChat, ": ");
+				strcat(finalMessageChat, messageChat);
+				strcat(finalMessageChat, "\n");
+
+				fputs(finalMessageChat, logUser);
+				fclose(logUser);
+
+				fflush(stdout);
+			}
+		}
+	}else{		
 	for(i=0;i<_users.size;i++){
-				
+		
 		if(strcmp(_users.name[i],userName) != 0){
 			memset (fileName,'\0',49);
 			memset (finalMessageChat,'\0',299);
@@ -212,6 +261,8 @@ void putMessageChatInLog(char *userName, char *messageChat){
 		}
 		
 	}
+}
+
 }
 
 struct messageList checkLog(char *userName){
