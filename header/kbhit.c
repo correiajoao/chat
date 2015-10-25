@@ -38,4 +38,11 @@ int kbhit(void)
  
   return 0;
 }
+
+void waitKey(){
+
+	printf("Pressione qualquer tecla para sair\n");
+	fflush(stdin);	
+	 sleep(2);
+}
  

@@ -92,7 +92,18 @@ void printAlert(char *message){
 
 void printHowWorks(){
 	printHeader("ENTENDA COMO FUNCIONA");
-	printf("Funciona bem ... \n");
+	printf("\n");
+	printAlert("O bate-papo versão 1.0 é simples e intuitivo!");	
+	printf("\n\n");
+	printf("Siga os passos: \n");
+	printf("* Escolha a opçao participar.\n");
+	printf("* Insira um nome valido.\n");
+	printf("* Apos entrar no bate-papo algumas opçoes sao possiveis:\n");
+	printf("         *Insira a tecla '>' para digitar uma menssagem.\n");
+	printf("         *Insira a tecla 's' para voltar ao menu anterior.\n");
+	printf("         *Menssagens com '@nome ' sao direcionadas apenas para o usuario 'nome'.\n");
+	printf("         		*Exemplo: '@joao Bom dia'\n");
+	printf("\n\n");
 }
 
 void printAnimation(){

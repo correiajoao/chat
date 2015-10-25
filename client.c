@@ -193,6 +193,7 @@ int main(){
 					break;
 				}case 2:{
 					printHowWorks();
+					waitKey();
 					break;
 				}case 3:{
 					free(bufferSend);
