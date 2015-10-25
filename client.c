@@ -164,7 +164,7 @@ int main(){
 
 												strcpy(_bufferRcv, bufferRcv);
 											}
-											 sleep(1);
+											 usleep(500000);
 										}
 
 										bufferKey = getchar();

@@ -40,12 +40,7 @@ int main(){
 	int localSocket,remoteSocket,structSize;
 	struct sockaddr_in local;
 	struct sockaddr_in remote;
-	
-	//Alocação de memória necessária
-	bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));
-	_bufferRcv = (char *) calloc (MAXALLOC, sizeof(char));	
-	msgContent = (char *) calloc (MAXALLOC, sizeof(char));	
-	
+		
 	system("clear");
 	//Apagando todos os dados de seções passadas
 	deleteFile();
@@ -76,14 +71,19 @@ int main(){
 		pid = fork();
 		
 		if(pid == 0){
+				//Alocação de memória necessária
+				bufferRcv = (char*) calloc (MAXALLOC, sizeof(char));
+				_bufferRcv = (char*) calloc (MAXALLOC, sizeof(char));	
+				msgContent = (char*) calloc (MAXALLOC, sizeof(char));			
 			
 				fluxo = 0;
-				while(!fluxo){				
+				while(!fluxo){	
+		
 					recv(remoteSocket, bufferRcv, MAXDATASIZE,  0);
 					strcpy(_bufferRcv, bufferRcv); 		
 					
 					if(checkKindMessage(_bufferRcv,1) == USERNAME){
-						
+						printf("Mensagem recebida por: %d\n", pid);
 						//Resgata o conteudo da mensagem
 						strcpy(_bufferRcv, bufferRcv);  		
 						msgContent = checkMessage(_bufferRcv);
@@ -155,7 +155,7 @@ int main(){
 						}
 
 					}
-				}else{
+				}else{					
 					removeUser(userName);
 					deleteUserFiles(userName);
 					close(remoteSocket);
@@ -165,14 +165,11 @@ int main(){
 				
 			}
 			
-		break;
-		}		
-	}
-	
-	if(pid != 0){
 		free(bufferRcv);
 		free(_bufferRcv);
-		free(msgContent);
+		free(msgContent);	
+		break;
+		}		
 	}
 	
 	return 0;
