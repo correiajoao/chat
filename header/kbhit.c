@@ -40,9 +40,15 @@ int kbhit(void)
 }
 
 void waitKey(){
-
-	printf("Pressione qualquer tecla para sair\n");
-	fflush(stdin);	
-	 sleep(2);
+	char bufferKey;
+	printAlert("Pressione 'v' para voltar");
+	do{
+		while(!kbhit()){
+			fflush(stdin);
+			usleep(100000);
+		
+		}
+		bufferKey = getchar();
+	}while(bufferKey != 'v');
 }
  

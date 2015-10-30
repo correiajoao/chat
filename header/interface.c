@@ -33,8 +33,8 @@ void printHeader(char * indentifier){
 
 void printMenuOptions(){
 	printf("\n");
-	printf("1 | Participar\n");
-	printf("2 | Entenda como funcina\n");
+	printf("1 | Conectar-se\n");
+	printf("2 | Funcionalidades\n");
 	printf("3 | Sair\n");
 	printf("\n");
 	printf("Escolha sua opção: ");
@@ -42,16 +42,16 @@ void printMenuOptions(){
 
 void printSecondMenuOptions(){
 	printf("\n");
-	printf("1 | Verificar Lista de usuários ativos\n");
-	printf("2 | Entrar no bate papo\n");
-	printf("3 | Desconectar\n");
+	printf("1 | Usuários ativos\n");
+	printf("2 | Bate papo\n");
+	printf("3 | Sair\n");
 	printf("\n");
 	printf("Escolha sua opção: ");
 }
 
 void printUserList(struct userList _users){
 	int i = 0;
-	printHeader("LISTA DE USUARIOS ATIVOS");								
+	printHeader("Usuários ativos");								
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", __TIME__);
 	
 	for(i=0;i<_users.size;i++){
@@ -91,19 +91,19 @@ void printAlert(char *message){
 }
 
 void printHowWorks(){
-	printHeader("ENTENDA COMO FUNCIONA");
+	printHeader("Funcionalidades");
 	printf("\n");
-	printAlert("O bate-papo versão 1.0 é simples e intuitivo!");	
+	printAlert("O Bate-papo versão 1.0 é simples e intuitivo!");	
 	printf("\n\n");
 	printf("Siga os passos: \n");
-	printf("* Escolha a opçao participar.\n");
+	printf("* Escolha a opçao conectar-se.\n");
 	printf("* Insira um nome valido.\n");
-	printf("* Apos entrar no bate-papo algumas opçoes sao possiveis:\n");
+	printf("* Na sala de conversa algumas opções estão disponíveis:\n");
 	printf("         *Insira a tecla '>' para digitar uma menssagem.\n");
-	printf("         *Insira a tecla 's' para voltar ao menu anterior.\n");
+	printf("         *Insira a tecla 'v' para voltar ao menu anterior.\n");
 	printf("         *Menssagens com '@nome ' sao direcionadas apenas para o usuario 'nome'.\n");
 	printf("         		*Exemplo: '@joao Bom dia'\n");
-	printf("\n\n");
+	printf("\n\n\n");
 }
 
 void printAnimation(){
@@ -130,6 +130,6 @@ void printAnimation(){
     printf("                                           888               888\n");
 	usleep(100000);
     printf("                                           888               888\n");  
-	sleep(2);
+	sleep(1);
 }
 

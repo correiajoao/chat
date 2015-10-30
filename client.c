@@ -64,7 +64,7 @@ int main(){
 	printAnimation();
 	
 		do{
-		printHeader("BATE PAPO ");
+		printHeader("Bate-papo");
 		printMenuOptions();
 		scanf("%d", &opc);
 			
@@ -97,7 +97,7 @@ int main(){
 
 
 						do{
-							printHeader("BATE PAPO ATIVO");
+							printHeader("Bate-papo");
 							printSecondMenuOptions();
 							scanf("%d", &opc2);
 
@@ -124,7 +124,7 @@ int main(){
 
 										if(checkKindMessage(_bufferRcv,0) == FINISHED){
 											printUserList(_users);		
-											sleep(2);
+											waitKey();
 
 										}
 										strcpy(_bufferRcv, bufferRcv);
@@ -132,7 +132,7 @@ int main(){
 
 								break;
 								}case 2:{
-									printHeader("MENSAGENS DE BATE PAPO");
+									printHeader("Sala de conversa");
 
 									isChatting = 1;
 									while(isChatting){
@@ -174,7 +174,7 @@ int main(){
 											printf("\n");
 											bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
 											send(localSocket, bufferSend, MAXDATASIZE, 0);
-										}else if(bufferKey == 's'){
+										}else if(bufferKey == 'v'){
 											isChatting = 0;
 										}else{
 											fflush(stdin);
@@ -191,11 +191,13 @@ int main(){
 							}
 						}while(opc2 != 3);
 					break;
+					
 				}case 2:{
 					printHowWorks();
 					waitKey();
 					break;
 				}case 3:{
+					
 					free(bufferSend);
 					free(bufferRcv);
 					free(_bufferRcv);
