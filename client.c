@@ -27,12 +27,10 @@ int main(){
 	//Variáveis Comuns
 	char userName[50];
 	char messageChat[250];
-	char bufferKey;
-	char *bufferSend;
-	char *bufferRcv;
-	char *_bufferRcv;
+	char bufferKey, *bufferSend, *bufferRcv, *_bufferRcv;
 	int flow,opc,opc2,numBytes,isChatting;
 	
+	//Estruturas de listas
 	struct userList _users;
 	struct messageList _messages;
 	
@@ -68,9 +66,9 @@ int main(){
 		printMenuOptions();
 		scanf("%d", &opc);
 			
+			//Verificação do primeiro menu
 			switch(opc){
-				case 1:{
-					
+				case 1:{	
 					flow = 0;				
 					while(!flow){	
 						printHeader("Fase inicial");
@@ -94,14 +92,15 @@ int main(){
 							flow = 0;
 						}
 					}
-
-
+	
 						do{
 							printHeader("Bate-papo");
 							printSecondMenuOptions();
 							scanf("%d", &opc2);
-
+							
+							//Verificação do segundo menu
 							switch(opc2){
+								//Solicita ao servidor a lista de usuários onlines
 								case 1:{
 									bufferSend = generateMessage("", ACTIVEUSERS,0);
 									send(localSocket, bufferSend, MAXDATASIZE, 0);	
@@ -131,6 +130,7 @@ int main(){
 									}
 
 								break;
+								//Entra na sala de conversa	
 								}case 2:{
 									printHeader("Sala de conversa");
 
@@ -182,8 +182,15 @@ int main(){
 								}
 
 								break;	
+								//Solicita o fechamento de conexão ao servidor e finaliza o cliente
 								}case 3:{
+									bufferSend = generateMessage("",CLOSE,0);
+									send(localSocket, bufferSend, MAXDATASIZE, 0);	
 									printAlert("Até mais ver, em francês, Au revoir");
+									
+									free(bufferSend);
+									free(bufferRcv);
+									free(_bufferRcv);
 									return 0;
 								break;
 								}
@@ -191,13 +198,17 @@ int main(){
 							}
 						}while(opc2 != 3);
 					break;
-					
+				//Mostra as instruções de uso ao cliente	
 				}case 2:{
 					printHowWorks();
 					waitKey();
 					break;
-				}case 3:{
 					
+				}case 3:{
+					bufferSend = generateMessage("",CLOSE,0);
+					send(localSocket, bufferSend, MAXDATASIZE, 0);	
+					printAlert("Até mais ver, em francês, Au revoir");
+				
 					free(bufferSend);
 					free(bufferRcv);
 					free(_bufferRcv);
