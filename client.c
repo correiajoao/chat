@@ -172,10 +172,13 @@ int main(){
 											printf(" Voce: ");
 											scanf(" %[^\n]s", messageChat);
 											printf("\n");
+											
 											bufferSend = generateMessage(messageChat, MESSAGECHAT,0);
 											send(localSocket, bufferSend, MAXDATASIZE, 0);
 										}else if(bufferKey == 'v'){
 											isChatting = 0;
+										}else if(bufferKey == 'l'){
+											printHeader("Sala de conversa");
 										}else{
 											fflush(stdin);
 										}
@@ -194,7 +197,6 @@ int main(){
 									return 0;
 								break;
 								}
-
 							}
 						}while(opc2 != 3);
 					break;

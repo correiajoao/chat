@@ -92,18 +92,19 @@ void printAlert(char *message){
 
 void printHowWorks(){
 	printHeader("Funcionalidades");
+	printAlert("O Bate-papo versão beta é simples e intuitivo!");	
 	printf("\n");
-	printAlert("O Bate-papo versão 1.0 é simples e intuitivo!");	
-	printf("\n\n");
 	printf("Siga os passos: \n");
 	printf("* Escolha a opçao conectar-se.\n");
 	printf("* Insira um nome valido.\n");
+	printf("* A opção usuários online mostra todos os usuários em tempo real.\n");
 	printf("* Na sala de conversa algumas opções estão disponíveis:\n");
 	printf("         *Insira a tecla '>' para digitar uma menssagem.\n");
 	printf("         *Insira a tecla 'v' para voltar ao menu anterior.\n");
+	printf("         *Insira a tecla 'l' para limpar a tela.\n");
 	printf("         *Menssagens com '@nome ' sao direcionadas apenas para o usuario 'nome'.\n");
 	printf("         		*Exemplo: '@joao Bom dia'\n");
-	printf("\n\n\n");
+
 }
 
 void printAnimation(){
@@ -129,7 +130,10 @@ void printAnimation(){
 	usleep(100000);
     printf("                                           888               888\n");
 	usleep(100000);
-    printf("                                           888               888\n");  
+   	printf("                                           888               888\n");  
+	usleep(100000);	
+	printf("\n"); 		
+	printf("                                                                  Versão beta\n"); 		
 	sleep(1);
 }
 
