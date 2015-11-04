@@ -168,9 +168,13 @@ int main(){
 							removeUser(userName);
 							deleteUserFiles(userName);
 							close(remoteSocket);
-							break;
+							
+							free(bufferRcv);
+							free(_bufferRcv);
+							free(msgContent);
+							return 0;
 						}
-
+					
 					}
 				}else{
 					removeUser(userName);
