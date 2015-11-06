@@ -7,7 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "managerdata.h"
+#include "systime.h"
+#include "managerdata.h"	
 
 void deleteFile(){
 	system("rm -rf file");
@@ -222,8 +223,11 @@ void putMessageChatInLog(char *userName, char *messageChat){
 				strcat(fileName,".txt");
 
 				logUser = fopen(fileName, "a+");
-
-				strcat(finalMessageChat, "(Privado) ");
+				
+				strcat(finalMessageChat, "[");
+				strcat(finalMessageChat, getHourMinutes());
+				strcat(finalMessageChat, "]");
+				strcat(finalMessageChat, " - [Privado] - ");
 				strcat(finalMessageChat, userName);
 				strcat(finalMessageChat, ": ");
 				strcat(finalMessageChat, messageChat);
@@ -247,7 +251,10 @@ void putMessageChatInLog(char *userName, char *messageChat){
 			strcat(fileName,".txt");
 				
 			logUser = fopen(fileName, "a+");
-			
+			strcat(finalMessageChat, "[");
+			strcat(finalMessageChat, getHourMinutes());
+			strcat(finalMessageChat, "] - ");
+				
 			strcat(finalMessageChat, userName);
 			strcat(finalMessageChat, ": ");
 			strcat(finalMessageChat, messageChat);

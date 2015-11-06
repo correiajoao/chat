@@ -17,6 +17,7 @@
 #include "header/kbhit.h"
 #include "header/error.h"
 #include "header/struct.h"
+#include "header/systime.h"
 #include "header/message.h"
 #include "header/interface.h"
 
@@ -169,7 +170,7 @@ int main(){
 
 										bufferKey = getchar();
 										if(bufferKey == '>'){	
-											printf(" Voce: ");
+											printf(" [%s] - Voce: ", getHourMinutes());
 											scanf(" %[^\n]s", messageChat);
 											printf("\n");
 											

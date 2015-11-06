@@ -9,6 +9,7 @@
 #define INTERFACE_H
 
 #include "struct.h"
+#include "systime.h"	
 
 //Essa função mostra o cabeçalho da interface
 void printHeader(char * indentifier);

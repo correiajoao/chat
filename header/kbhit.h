@@ -5,8 +5,8 @@
 	GitHub: www.github.com/correiajoao/chat 
 */
 
-#ifdef ERROR_H
-#define ERROR_H
+#ifndef KBHIT_H
+#define KBHIT_H
 
 //Essa função verifica se o usuário apertou alguma tecla
 int kbhit();

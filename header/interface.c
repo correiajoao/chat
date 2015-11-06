@@ -4,11 +4,12 @@
 	Data: 25/09/2015
 	GitHub: www.github.com/correiajoao/chat 
 */
-#include <time.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "interface.h"
+#include "systime.h"	
 
 void printHeader(char * indentifier){
 	int i;	
@@ -27,7 +28,7 @@ void printHeader(char * indentifier){
 		printf("#");	
 	}
 	
-	printf("                                                         Último acesso: %s\n", __TIME__);
+	printf("                                                         Último acesso: %s\n", getHourMinutesSeconds());
 	printf("--------------------------------------------------------------------------------\n");
 }
 
@@ -52,7 +53,7 @@ void printSecondMenuOptions(){
 void printUserList(struct userList _users){
 	int i = 0;
 	printHeader("Usuários ativos");								
-	printf("Usuário número                  Usuário                  Atualizado às: %s\n", __TIME__);
+	printf("Usuário número                  Usuário                  Atualizado às: %s\n", getHourMinutesSeconds());
 	
 	for(i=0;i<_users.size;i++){
 		printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
