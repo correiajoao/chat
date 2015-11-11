@@ -14,7 +14,6 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 
-//Cabeçalhos 
 #include "header/struct.h"
 #include "header/error.h"
 #include "header/message.h"
@@ -26,17 +25,14 @@
 
 
 int main(){
-	//Variaveis comuns
 	pid_t pid;
 	int fluxo, msgKind;
 	char userName[50];
 	char *bufferRcv, *_bufferRcv, *msgContent;	
 	
-	//Estruturas de listas	
 	struct userList _users;
 	struct messageList _messages;
 	
-	//Variaveis de socket
 	int localSocket,remoteSocket,structSize;
 	struct sockaddr_in local;
 	struct sockaddr_in remote;

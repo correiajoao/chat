@@ -25,17 +25,14 @@
 #define MAXALLOC 500
 
 int main(){
-	//Variáveis Comuns
 	char userName[50];
 	char messageChat[250];
 	char bufferKey, *bufferSend, *bufferRcv, *_bufferRcv;
 	int flow,opc,opc2,numBytes,isChatting;
 	
-	//Estruturas de listas
 	struct userList _users;
 	struct messageList _messages;
 	
-	//Variáves de socket
 	int localSocket,conection;
 	struct sockaddr_in remoto;	
 	
