@@ -56,7 +56,7 @@ void printUserList(struct userList _users){
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", getHourMinutesSeconds());
 	
 	for(i=0;i<_users.size;i++){
-		printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
+		printf("      %d                          %s\n", i, _users.name[i]);
 	}
 								
 	printf("\n");
@@ -100,7 +100,7 @@ void printHowWorks(){
 	printf("* Insira um nome valido.\n");
 	printf("* A opção usuários online mostra todos os usuários em tempo real.\n");
 	printf("* Na sala de conversa algumas opções estão disponíveis:\n");
-	printf("         *Insira a tecla '>' para digitar uma menssagem.\n");
+	printf("         *Insira a tecla '>' para digitar uma mensagem.\n");
 	printf("         *Insira a tecla 'v' para voltar ao menu anterior.\n");
 	printf("         *Insira a tecla 'l' para limpar a tela.\n");
 	printf("         *Menssagens com '@nome ' sao direcionadas apenas para o usuario 'nome'.\n");

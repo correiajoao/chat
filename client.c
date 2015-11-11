@@ -28,7 +28,7 @@ int main(){
 	char userName[50];
 	char messageChat[250];
 	char bufferKey, *bufferSend, *bufferRcv, *_bufferRcv;
-	int flow,opc,opc2,numBytes,isChatting;
+	int flow,opt,opt2,numBytes,isChatting;
 	
 	struct userList _users;
 	struct messageList _messages;
@@ -62,10 +62,10 @@ int main(){
 		do{
 		printHeader("Bate-papo");
 		printMenuOptions();
-		scanf("%d", &opc);
+		scanf("%d", &opt);
 			
 			//Verificação do primeiro menu
-			switch(opc){
+			switch(opt){
 				case 1:{	
 					flow = 0;				
 					while(!flow){	
@@ -94,10 +94,10 @@ int main(){
 						do{
 							printHeader("Bate-papo");
 							printSecondMenuOptions();
-							scanf("%d", &opc2);
+							scanf("%d", &opt2);
 							
 							//Verificação do segundo menu
-							switch(opc2){
+							switch(opt2){
 								//Solicita ao servidor a lista de usuários onlines
 								case 1:{
 									bufferSend = generateMessage("", ACTIVEUSERS,0);
@@ -196,7 +196,7 @@ int main(){
 								break;
 								}
 							}
-						}while(opc2 != 3);
+						}while(opt2 != 3);
 					break;
 				//Mostra as instruções de uso ao cliente	
 				}case 2:{
@@ -215,7 +215,7 @@ int main(){
 					return 0;
 				}	
 			}
-		}while(opc != 3);	
+		}while(opt != 3);	
 		
 		free(bufferSend);
 		free(bufferRcv);
