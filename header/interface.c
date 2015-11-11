@@ -56,7 +56,7 @@ void printUserList(struct userList _users){
 	printf("Usuário número                  Usuário                  Atualizado às: %s\n", getHourMinutesSeconds());
 	
 	for(i=0;i<_users.size;i++){
-		printf("-- >> %d                     -->> %s\n", i, _users.name[i]);
+		printf("       %d                         %s\n", i, _users.name[i]);
 	}
 								
 	printf("\n");
