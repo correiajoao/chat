@@ -5,7 +5,6 @@
 	GitHub: www.github.com/correiajoao/chat 
 */
 #include <stdio.h>
-#include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #include "systime.h"
@@ -151,13 +150,13 @@ void removeUser(char *userName){
 
 struct userList checkActiveUsers(){
 	FILE *users;
-	int i, j;
 	char *token;
-	char aux[50];
 	char line[300];
 	memset (line,'\0',299);
 
+	
 	//Lista de usuarios ativos
+	int i = 0;
 	struct userList _users;
 
 	_users.size = i;
@@ -173,17 +172,6 @@ struct userList checkActiveUsers(){
 			i++;
 		}
 		
-	}
-	
-	//Ordenação dos nomes de usuarios ativos
-	for(i=0;i<_users.size;i++){
-		for(j=0;j<_users.size-1;j++){
-			if(tolower(_users.name[j][1]) > tolower(_users.name[j+1][1])){
-				strcpy(aux,_users.name[j]);
-				strcpy(_users.name[j],_users.name[j+1]);
-				strcpy(_users.name[j+1],aux);
-			}
-		}
 	}
 	
 	fclose(users);

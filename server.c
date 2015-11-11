@@ -26,7 +26,7 @@
 
 int main(){
 	pid_t pid;
-	int flow, msgKind;
+	int fluxo, msgKind;
 	char userName[50];
 	char *bufferRcv, *_bufferRcv, *msgContent;	
 	
@@ -83,14 +83,15 @@ int main(){
 				_bufferRcv = (char*) calloc (MAXALLOC, sizeof(char));	
 				msgContent = (char*) calloc (MAXALLOC, sizeof(char));			
 			
-				flow = 0;
-				while(!flow){	
+				fluxo = 0;
+				while(!fluxo){	
 					recv(remoteSocket, bufferRcv, MAXDATASIZE,  0);
 					strcpy(_bufferRcv, bufferRcv);
 					
 					//Após a conexão de um cliente, a primeira mensagem que o servidor espera é do tipo USERNAME,
 					//caso contrário o processo servidor é finalizado
 					if(checkKindMessage(_bufferRcv,1) == USERNAME){
+						printf("Mensagem recebida por: %d\n", pid);
 						//Resgata o conteudo da mensagem
 						strcpy(_bufferRcv, bufferRcv);  		
 						msgContent = checkMessage(_bufferRcv);
@@ -106,12 +107,12 @@ int main(){
 								
 								//Informa ao cliente que ele foi conectado		   
 								send(remoteSocket,generateMessage("",CONNECTED,1),MAXDATASIZE,0);	
-								flow = 1;
+								fluxo = 1;
 							}else{
 							
 								//Sinaliza que o nome de usuário é inválido
 								send(remoteSocket,generateMessage("",INVALIDUSERNAME,1),MAXDATASIZE,0);
-								flow = 0;
+								fluxo = 0;
 							}
 					}else{
 						close(remoteSocket);
@@ -119,8 +120,8 @@ int main(){
 					}
 				}
 			
-			flow = 0;	
-			while(!flow){
+			fluxo = 0;	
+			while(!fluxo){
 				
 				//Recebe uma mensagem e guarda o estado de atividade do cliente
 				int isActive = recv(remoteSocket, bufferRcv, MAXDATASIZE,  0);
