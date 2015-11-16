@@ -91,7 +91,6 @@ int main(){
 					//Após a conexão de um cliente, a primeira mensagem que o servidor espera é do tipo USERNAME,
 					//caso contrário o processo servidor é finalizado
 					if(checkKindMessage(_bufferRcv,1) == USERNAME){
-						printf("Mensagem recebida por: %d\n", pid);
 						//Resgata o conteudo da mensagem
 						strcpy(_bufferRcv, bufferRcv);  		
 						msgContent = checkMessage(_bufferRcv);
